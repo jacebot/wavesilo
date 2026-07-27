@@ -60,10 +60,10 @@ const REPO = 'https://github.com/jacebot/wavesilo'
 const REL = `${REPO}/releases/download/v0.2.1`
 
 const downloads = [
-  { os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.1-arm64.dmg`, primary: true },
-  { os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.1.dmg` },
-  { os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.1.exe` },
-  { os: 'Linux', note: 'AppImage', href: `${REL}/Wave.Silo-0.2.1.AppImage` },
+  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.1-arm64.dmg` },
+  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.1.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.1.exe` },
+  { key: 'linux', os: 'Linux', note: 'AppImage', href: `${REL}/Wave.Silo-0.2.1.AppImage` },
 ]
 
 const features = [
@@ -98,6 +98,24 @@ export default function App() {
   }, [mode])
 
   const cycle = () => setMode(mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system')
+
+  // Detect the visitor's OS (and Mac CPU arch where the browser exposes it) to
+  // highlight the right download. Safari can't reveal Mac arch, so default to
+  // Apple Silicon (the common case now).
+  const [rec, setRec] = useState('')
+  useEffect(() => {
+    const ua = navigator.userAgent
+    if (/Windows/i.test(ua)) return setRec('win')
+    if (/Android/i.test(ua)) return
+    if (/Linux|X11/i.test(ua)) return setRec('linux')
+    if (/Mac/i.test(ua)) {
+      setRec('mac-arm')
+      const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
+      uad?.getHighEntropyValues?.(['architecture']).then((v) => {
+        if (v?.architecture === 'x86') setRec('mac-intel')
+      }).catch(() => {})
+    }
+  }, [])
 
   return (
     <div className="site">
@@ -187,7 +205,8 @@ export default function App() {
           <p className="lead center">Free. No account. Pick your platform.</p>
           <div className="dl-grid">
             {downloads.map((d) => (
-              <a key={d.os + d.note} className={`dl ${d.primary ? 'dl-primary' : ''}`} href={d.href}>
+              <a key={d.key} className={`dl ${d.key === rec ? 'dl-primary' : ''}`} href={d.href}>
+                {d.key === rec && <span className="dl-badge">Recommended</span>}
                 <span className="dl-os">{d.os}</span>
                 <span className="dl-note">{d.note}</span>
               </a>

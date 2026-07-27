@@ -189,12 +189,19 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ---- download ---- */
 .download { width: min(1160px, 92%); margin: 0 auto; padding: 56px 0 90px; text-align: center; }
-.dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 780px; margin: 0 auto 20px; }
+.dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 780px; margin: 40px auto 20px; }
 .dl {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   padding: 22px 14px; border-radius: 14px;
   border: 1px solid var(--border); background: var(--panel);
   transition: transform 0.08s, border-color 0.15s, background 0.15s;
+}
+.dl-badge {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--teal); color: var(--btn-text);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em;
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
 }
 .dl:hover { border-color: var(--teal); transform: translateY(-2px); }
 .dl-os { font-weight: 700; font-size: 16px; }
