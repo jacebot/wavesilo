@@ -1,32 +1,54 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<img src="src/assets/logo.png" width="88" alt="Wave Silo logo" />
 
-Currently, two official plugins are available:
+# Wave Silo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Your samples, finally organized.
 
-## React Compiler
+A fast, **offline** sample library manager — waveform preview, real **BPM &amp; key** analysis,
+and **drag straight into your DAW**. Own‑your‑data, no account, no subscription.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<p>
+<a href="https://wavesilo.com"><img src="https://img.shields.io/badge/wavesilo.com-live-37b7ab?style=for-the-badge&labelColor=0c0f14" alt="wavesilo.com" /></a>
+<a href="https://github.com/jacebot/wavesilo/releases/latest"><img src="https://img.shields.io/badge/download-free-2b8f86?style=for-the-badge&labelColor=0c0f14" alt="Download" /></a>
+<img src="https://img.shields.io/badge/mac%20·%20windows%20·%20linux-8b90d6?style=for-the-badge&labelColor=0c0f14" alt="Platforms" />
+</p>
 
-## Expanding the Oxlint configuration
+<img src="src/assets/screenshot-dark.png" width="880" alt="Wave Silo — sample library with waveforms, BPM and key" />
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+</div>
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Download
+
+Free, all three platforms — grab it at **[wavesilo.com](https://wavesilo.com)** or the
+**[latest release](https://github.com/jacebot/wavesilo/releases/latest)**.
+
+| Platform | File |
+|---|---|
+| 🍎 macOS (Apple Silicon) | `Wave.Silo-<v>-arm64.dmg` |
+| 🍎 macOS (Intel) | `Wave.Silo-<v>.dmg` |
+| 🪟 Windows | `Wave.Silo.Setup-<v>.exe` |
+| 🐧 Linux | `Wave.Silo-<v>.AppImage` |
+
+> Unsigned for now — on macOS right‑click → **Open**; on Windows choose **More info → Run anyway**.
+
+## What it does
+
+- 🎛️ **Drag into your DAW** — audition a sample, then drag it onto a track in Ableton, Logic, FL. Drag folders in to add them.
+- 🎚️ **Real BPM &amp; key** — actually analyzes the audio (not filename guessing), plus waveform and metadata.
+- 🗂️ **Own your data** — a local SQLite library. No account, no cloud, fully offline.
+- 🎹 **Every format, even MIDI** — WAV · AIFF · MP3 · FLAC · OGG, plus MIDI with a built‑in synth &amp; piano‑roll.
+- 🔎 **Find sounds fast** — fuzzy search, folder tree, tags, favorites, smart Type groups, and an A–Z quick‑jump.
+- 📈 **A real audio engine** — play/seek waveforms, live frequency spectrum, true peak metering.
+
+## About this repo
+
+This is the **marketing site** for Wave Silo — [Vite](https://vitejs.dev) + React, deployed to
+[wavesilo.com](https://wavesilo.com) via Vercel. The desktop app is built with Electron + TypeScript.
+
+```bash
+npm install
+npm run dev      # local dev
+npm run build    # production build → dist/
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
