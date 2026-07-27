@@ -75,6 +75,7 @@ const features = [
   { k: 'recover', title: 'Never lose a sample', body: 'Moved or renamed a file on disk? Wave Silo spots the orphans, flags them, and relocates in one click — tags and ratings intact.' },
   { k: 'scan', title: 'Point it at your whole drive', body: 'Scans tens of thousands of files in the background while you keep browsing. Drop a 60k folder and keep working.' },
   { k: 'bulk', title: 'Wrangle a mess in minutes', body: 'Multi-select rows — or whole folders from the sidebar — and favorite, tag, or organize them all at once.' },
+  { k: 'yours', title: 'Make it yours', body: 'Light or dark, six meter themes, EQ color palettes, and three waveform styles. Tune the look to your studio.' },
 ]
 
 type Mode = 'light' | 'dark' | 'system'

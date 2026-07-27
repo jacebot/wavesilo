@@ -12,9 +12,11 @@
   --orange: #d1502a;
   --violet: #8b90d6;
   --lime: #b4f125;
+  --btn-text: #05201d;
 }
 
 :root[data-theme="light"] {
+  --btn-text: #ffffff;
   --bg: #f4f2ec;
   --bg-2: #ece9e1;
   --panel: #ffffff;
@@ -80,7 +82,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .nav nav a:hover { color: var(--text); }
 .pill {
   padding: 8px 16px; border-radius: 999px;
-  background: var(--teal); color: #05201d !important; font-weight: 700;
+  background: var(--teal); color: var(--btn-text) !important; font-weight: 700;
 }
 .pill:hover { background: #45c8bb; }
 
@@ -107,7 +109,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   transition: transform 0.08s, background 0.15s, border-color 0.15s;
 }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--teal); color: #05201d; box-shadow: 0 10px 30px rgba(55,183,171,0.25); }
+.btn-primary { background: var(--teal); color: var(--btn-text); box-shadow: 0 10px 30px rgba(55,183,171,0.25); }
 .btn-primary:hover { background: #45c8bb; }
 .btn-ghost { border: 1px solid var(--border); color: var(--text); background: rgba(255,255,255,0.02); }
 .btn-ghost:hover { border-color: var(--teal); }
@@ -145,6 +147,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .card-recover .dot { background: linear-gradient(135deg, var(--teal), var(--lime)); }
 .card-scan .dot { background: var(--orange); }
 .card-bulk .dot { background: linear-gradient(135deg, var(--violet), var(--orange)); }
+.card-yours .dot { background: linear-gradient(135deg, var(--teal), var(--orange)); }
 
 /* ---- faq ---- */
 .faq { width: min(820px, 92%); margin: 0 auto; padding: 60px 0; }
