@@ -116,9 +116,24 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .card-organize .dot { background: linear-gradient(135deg, var(--teal), var(--violet)); }
 .card-scale .dot { background: linear-gradient(135deg, var(--violet), var(--orange)); }
 
-/* ---- preview ---- */
-.preview { width: min(1160px, 92%); margin: 0 auto; padding: 56px 0; text-align: center; }
-.preview .lead { margin-bottom: 40px; }
+/* ---- showcase (alternating feature rows) ---- */
+.showcase { width: min(1160px, 92%); margin: 0 auto; padding: 64px 0; }
+.frow {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center;
+  margin: 64px 0;
+}
+.frow .frow-img { margin: 0; }
+.frow.reverse .frow-img { order: 2; }
+.frow-text h3 { font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; margin: 0 0 18px; font-weight: 800; }
+.frow-text ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 13px; }
+.frow-text li {
+  position: relative; padding-left: 28px; color: var(--muted); font-size: 15.5px;
+}
+.frow-text li::before {
+  content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; border-radius: 4px;
+  background: var(--teal); box-shadow: 0 0 12px rgba(55, 183, 171, 0.5);
+}
+.frow.reverse .frow-text li::before { background: var(--violet); box-shadow: 0 0 12px rgba(139, 144, 214, 0.5); }
 
 /* ---- download ---- */
 .download { width: min(1160px, 92%); margin: 0 auto; padding: 56px 0 90px; text-align: center; }
@@ -147,4 +162,6 @@ main, .nav, .foot { position: relative; z-index: 1; }
   .grid { grid-template-columns: 1fr; }
   .dl-grid { grid-template-columns: repeat(2, 1fr); }
   .nav nav a:not(.pill) { display: none; }
+  .frow { grid-template-columns: 1fr; gap: 22px; margin: 44px 0; }
+  .frow.reverse .frow-img { order: 0; }
 }

@@ -1,7 +1,39 @@
 import './App.css'
 import shotDark from './assets/screenshot-dark.png'
 import shotLight from './assets/screenshot.png'
+import shotTagged from './assets/shot-tagged.png'
 import logo from './assets/logo.png'
+
+const blocks = [
+  {
+    img: shotDark,
+    title: 'Manage your whole collection',
+    points: [
+      'Drag any sample straight onto a track in Ableton, Logic, FL — or drag a folder in to add it',
+      'Reveal in Finder, relocate moved files, spot missing / unreadable ones in the Manage tab',
+      'Non-destructive: your files on disk are never touched, moved, or renamed',
+    ],
+  },
+  {
+    img: shotTagged,
+    title: 'Find anything in seconds',
+    points: [
+      'Fuzzy search across your entire library — “kikpunch” finds “Kick_Punch”',
+      'Folder tree, favorites, star ratings, and per-file tags',
+      'Smart Type groups — jump to all your WAVs, MIDI, or OGGs at once',
+      'A–Z quick-jump bar for long alphabetical lists',
+    ],
+  },
+  {
+    img: shotLight,
+    title: 'A real audio engine',
+    points: [
+      'Play and seek the waveform; watch the live frequency spectrum',
+      'True per-channel peak metering, plus BPM and musical key',
+      'Built-in MIDI synth and piano-roll preview',
+    ],
+  },
+]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
 const REL = `${REPO}/releases/download/v0.2.1`
@@ -72,12 +104,23 @@ export default function App() {
           </div>
         </section>
 
-        <section id="preview" className="preview">
-          <h2>Waveforms, spectrum, metering — the works</h2>
-          <p className="lead center">A real audio engine under the hood: play or seek any sample, watch the spectrum, meter the output — all offline.</p>
-          <div className="shot wide">
-            <img src={shotLight} alt="Wave Silo in light mode with the transport, spectrum and meters" />
-          </div>
+        <section id="preview" className="showcase">
+          <h2>Built to dig, tag, and ship sounds</h2>
+          {blocks.map((b, i) => (
+            <div key={b.title} className={`frow ${i % 2 ? 'reverse' : ''}`}>
+              <div className="frow-img shot">
+                <img src={b.img} alt={b.title} />
+              </div>
+              <div className="frow-text">
+                <h3>{b.title}</h3>
+                <ul>
+                  {b.points.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
         </section>
 
         <section id="download" className="download">
