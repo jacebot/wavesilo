@@ -99,9 +99,11 @@ export default function App() {
 
   const cycle = () => setMode(mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system')
 
-  // Detect the visitor's OS (and Mac CPU arch where the browser exposes it) to
-  // highlight the right download. Safari can't reveal Mac arch, so default to
-  // Apple Silicon (the common case now).
+  // Detect the visitor's OS (and Mac CPU arch) to highlight the right download.
+  // Default Mac to Apple Silicon, then correct to Intel via two signals:
+  // Chromium exposes arch through userAgentData; Safari doesn't, so we fall back
+  // to the WebGL renderer — Apple Silicon reports "Apple GPU", Intel Macs an
+  // Intel/AMD GPU.
   const [rec, setRec] = useState('')
   useEffect(() => {
     const ua = navigator.userAgent
@@ -111,9 +113,13 @@ export default function App() {
     if (/Mac/i.test(ua)) {
       setRec('mac-arm')
       const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
-      uad?.getHighEntropyValues?.(['architecture']).then((v) => {
-        if (v?.architecture === 'x86') setRec('mac-intel')
-      }).catch(() => {})
+      if (uad?.getHighEntropyValues) {
+        uad.getHighEntropyValues(['architecture']).then((v) => {
+          if (v?.architecture === 'x86') setRec('mac-intel')
+        }).catch(() => {})
+      } else if (isIntelMacGPU()) {
+        setRec('mac-intel')
+      }
     }
   }, [])
 
@@ -225,6 +231,19 @@ export default function App() {
       </footer>
     </div>
   )
+}
+
+// Safari can't report CPU arch, but the WebGL renderer distinguishes an Apple
+// Silicon GPU ("Apple GPU") from an Intel/AMD one on older Macs.
+function isIntelMacGPU(): boolean {
+  try {
+    const gl = document.createElement('canvas').getContext('webgl')
+    const ext = gl?.getExtension('WEBGL_debug_renderer_info')
+    const r = ext ? String(gl?.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : ''
+    return /intel|amd|radeon|nvidia|geforce/i.test(r)
+  } catch {
+    return false
+  }
 }
 
 function Logo() {
