@@ -126,7 +126,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ---- features ---- */
 .features { width: min(1160px, 92%); margin: 0 auto; padding: 96px 0 40px; }
-.features h2, .preview h2, .download h2 {
+.features h2, .showcase h2, .download h2, .faq h2 {
   text-align: center; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.02em; margin: 0 0 44px; font-weight: 800;
 }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -142,7 +142,28 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .card-own .dot { background: var(--orange); }
 .card-formats .dot { background: var(--lime); }
 .card-organize .dot { background: linear-gradient(135deg, var(--teal), var(--violet)); }
-.card-scale .dot { background: linear-gradient(135deg, var(--violet), var(--orange)); }
+.card-recover .dot { background: linear-gradient(135deg, var(--teal), var(--lime)); }
+.card-scan .dot { background: var(--orange); }
+.card-bulk .dot { background: linear-gradient(135deg, var(--violet), var(--orange)); }
+
+/* ---- faq ---- */
+.faq { width: min(820px, 92%); margin: 0 auto; padding: 60px 0; }
+.faq-list { display: grid; gap: 12px; }
+.faq details {
+  border: 1px solid var(--border); border-radius: 12px; background: var(--panel);
+  padding: 4px 20px; transition: border-color 0.15s;
+}
+.faq details[open] { border-color: var(--teal); }
+.faq summary {
+  cursor: pointer; list-style: none; padding: 16px 0; font-weight: 650; font-size: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; color: var(--teal); font-size: 22px; font-weight: 400; line-height: 1; transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0 0 18px; color: var(--muted); font-size: 15px; }
 
 /* ---- showcase (alternating feature rows) ---- */
 .showcase { width: min(1160px, 92%); margin: 0 auto; padding: 64px 0; }

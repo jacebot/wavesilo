@@ -3,7 +3,18 @@ import './App.css'
 import shotDark from './assets/screenshot-dark.png'
 import shotLight from './assets/screenshot.png'
 import shotTagged from './assets/shot-tagged.png'
+import shotRecovery from './assets/shot-recovery.png'
 import logo from './assets/logo.png'
+
+const faqs = [
+  { q: 'Is it actually free?', a: 'Yes — the core app is free, no account, no trial timer, no nag screens. (Optional paid power-features may come later, but the library manager stays free.)' },
+  { q: 'Do I need an account or internet?', a: 'No. Wave Silo runs fully offline. No login, no telemetry, nothing leaves your machine.' },
+  { q: 'Where does my data live? Will it touch my files?', a: 'Everything is a local SQLite database on your computer. Your audio files are never moved, copied, renamed, or modified — organizing is non-destructive.' },
+  { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI — MIDI plays through a built-in synth with a piano-roll preview.' },
+  { q: 'Why does my OS warn about an unidentified developer?', a: 'The builds aren’t code-signed yet. On macOS, right-click the app → Open. On Windows, choose More info → Run anyway. Proper signing is on the roadmap.' },
+  { q: 'Will it handle my huge collection?', a: 'Yes — it scans and indexes tens of thousands of samples in the background while you keep browsing.' },
+  { q: 'Which platforms?', a: 'macOS (Intel + Apple Silicon), Windows, and Linux.' },
+]
 
 const blocks = [
   {
@@ -34,6 +45,15 @@ const blocks = [
       'Built-in MIDI synth and piano-roll preview',
     ],
   },
+  {
+    img: shotRecovery,
+    title: 'Files moved? It finds them.',
+    points: [
+      'Orphaned files are detected on launch and flagged in the Manage tab',
+      'One-click Locate repoints a moved file — its tags, rating and favorite stay put',
+      'Retry unreadable files after a fix; nothing is ever deleted behind your back',
+    ],
+  },
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
@@ -52,7 +72,9 @@ const features = [
   { k: 'own', title: 'Your data, on your disk', body: 'A local SQLite library. No account, no login, no cloud, no subscription. Works fully offline.' },
   { k: 'formats', title: 'Every format, even MIDI', body: 'WAV · AIFF · MP3 · FLAC · OGG plus MIDI — with a built-in synth and piano-roll preview. AIFF decoded in-house.' },
   { k: 'organize', title: 'Tag, favorite, browse fast', body: 'Folder tree, tags, favorites, ratings, fuzzy search, A–Z jump, and smart Type groups. Find sounds in seconds.' },
-  { k: 'scale', title: 'Built for big collections', body: 'Tens of thousands of samples, indexed in the background while you keep working.' },
+  { k: 'recover', title: 'Never lose a sample', body: 'Moved or renamed a file on disk? Wave Silo spots the orphans, flags them, and relocates in one click — tags and ratings intact.' },
+  { k: 'scan', title: 'Point it at your whole drive', body: 'Scans tens of thousands of files in the background while you keep browsing. Drop a 60k folder and keep working.' },
+  { k: 'bulk', title: 'Wrangle a mess in minutes', body: 'Multi-select rows — or whole folders from the sidebar — and favorite, tag, or organize them all at once.' },
 ]
 
 type Mode = 'light' | 'dark' | 'system'
@@ -145,6 +167,18 @@ export default function App() {
               </div>
             </div>
           ))}
+        </section>
+
+        <section id="faq" className="faq">
+          <h2>Questions</h2>
+          <div className="faq-list">
+            {faqs.map((f) => (
+              <details key={f.q}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
         </section>
 
         <section id="download" className="download">
