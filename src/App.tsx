@@ -1,178 +1,111 @@
-import { useState, type CSSProperties } from 'react'
 import './App.css'
+import shotDark from './assets/screenshot-dark.png'
+import shotLight from './assets/screenshot.png'
+import logo from './assets/logo.png'
 
-type ThemeMode = 'abyss' | 'frost' | 'ember'
+const REPO = 'https://github.com/jacebot/wavesilo'
+const REL = `${REPO}/releases/download/v0.2.1`
 
-const themes: Array<{ id: ThemeMode; label: string }> = [
-  { id: 'abyss', label: 'Abyss' },
-  { id: 'frost', label: 'Frost' },
-  { id: 'ember', label: 'Ember' },
+const downloads = [
+  { os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.1-arm64.dmg`, primary: true },
+  { os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.1.dmg` },
+  { os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.1.exe` },
+  { os: 'Linux', note: 'AppImage', href: `${REL}/Wave.Silo-0.2.1.AppImage` },
 ]
 
-function App() {
-  const [theme, setTheme] = useState<ThemeMode>('abyss')
+const features = [
+  { k: 'drag', title: 'Drag straight into your DAW', body: 'Audition a sample, then drag it onto a track in Ableton, Logic, FL — anywhere. Drag folders in to add them.' },
+  { k: 'analyze', title: 'Real BPM & key detection', body: 'Not filename guessing — it actually analyzes the audio. Tempo, musical key, waveform, and metadata for every file.' },
+  { k: 'own', title: 'Your data, on your disk', body: 'A local SQLite library. No account, no login, no cloud, no subscription. Works fully offline.' },
+  { k: 'formats', title: 'Every format, even MIDI', body: 'WAV · AIFF · MP3 · FLAC · OGG plus MIDI — with a built-in synth and piano-roll preview. AIFF decoded in-house.' },
+  { k: 'organize', title: 'Tag, favorite, browse fast', body: 'Folder tree, tags, favorites, ratings, fuzzy search, A–Z jump, and smart Type groups. Find sounds in seconds.' },
+  { k: 'scale', title: 'Built for big collections', body: 'Tens of thousands of samples, indexed in the background while you keep working.' },
+]
 
+export default function App() {
   return (
-    <div className={`site theme-${theme}`}>
-      <div className="noise" aria-hidden="true"></div>
+    <div className="site">
+      <div className="glow" aria-hidden />
 
-      <header className="topbar">
-        <div className="brand">
-          <div className="brand-mark" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div>
-            <p className="eyebrow">Wave Silo</p>
-            <h1>Sample Manager</h1>
-          </div>
-        </div>
-
-        <div className="theme-switch" role="group" aria-label="Theme mode">
-          {themes.map((mode) => (
-            <button
-              key={mode.id}
-              type="button"
-              className={theme === mode.id ? 'active' : ''}
-              onClick={() => setTheme(mode.id)}
-              aria-pressed={theme === mode.id}
-            >
-              {mode.label}
-            </button>
-          ))}
-        </div>
+      <header className="nav">
+        <a className="brand" href="#top">
+          <Logo />
+          <span>Wave Silo</span>
+        </a>
+        <nav>
+          <a href="#features">Features</a>
+          <a href="#preview">Screenshots</a>
+          <a className="pill" href="#download">Download</a>
+        </nav>
       </header>
 
-      <main>
-        <section className="hero-grid">
-          <div>
-            <p className="kicker">Built for sample addicts and fast-moving producers</p>
-            <h2>
-              Organize chaos.
-              <br />
-              Find sounds in seconds.
-            </h2>
-            <p className="lead">
-              Wave Silo turns your sample folders into a playable, tagged, searchable
-              library with waveform preview, key and BPM context, and one-click folder
-              management.
-            </p>
-            <div className="hero-actions">
-              <a href="#beta" className="btn btn-primary">
-                Join Free Beta
+      <main id="top">
+        <section className="hero">
+          <p className="eyebrow">Offline sample library manager · free</p>
+          <h1>Your samples,<br /><span className="grad">finally organized.</span></h1>
+          <p className="lead">
+            Wave Silo turns folders of chaos into a fast, tagged, searchable library —
+            with waveform preview, real BPM &amp; key analysis, and drag-straight-to-your-DAW.
+            Own-your-data, no account, no subscription.
+          </p>
+          <div className="cta">
+            <a className="btn btn-primary" href="#download">Download free</a>
+            <a className="btn btn-ghost" href={REPO}>View releases</a>
+          </div>
+          <p className="sub">macOS · Windows · Linux — unsigned beta, free core forever.</p>
+
+          <div className="shot hero-shot">
+            <img src={shotDark} alt="Wave Silo — sample library with waveforms, BPM and key" />
+          </div>
+        </section>
+
+        <section id="features" className="features">
+          <h2>Everything you need to dig through sounds fast</h2>
+          <div className="grid">
+            {features.map((f) => (
+              <article key={f.k} className={`card card-${f.k}`}>
+                <div className="dot" aria-hidden />
+                <h3>{f.title}</h3>
+                <p>{f.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="preview" className="preview">
+          <h2>Waveforms, spectrum, metering — the works</h2>
+          <p className="lead center">A real audio engine under the hood: play or seek any sample, watch the spectrum, meter the output — all offline.</p>
+          <div className="shot wide">
+            <img src={shotLight} alt="Wave Silo in light mode with the transport, spectrum and meters" />
+          </div>
+        </section>
+
+        <section id="download" className="download">
+          <h2>Download Wave Silo</h2>
+          <p className="lead center">Free. No account. Pick your platform.</p>
+          <div className="dl-grid">
+            {downloads.map((d) => (
+              <a key={d.os + d.note} className={`dl ${d.primary ? 'dl-primary' : ''}`} href={d.href}>
+                <span className="dl-os">{d.os}</span>
+                <span className="dl-note">{d.note}</span>
               </a>
-              <a href="#preview" className="btn btn-ghost">
-                See Local Preview
-              </a>
-            </div>
+            ))}
           </div>
-
-          <div className="hero-art" aria-hidden="true">
-            <div className="pulse"></div>
-            <div className="spectrum">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <span key={i} style={{ '--i': i } as CSSProperties}></span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="stats">
-          <article>
-            <p className="stat-value">10x</p>
-            <p className="stat-label">faster sample retrieval</p>
-          </article>
-          <article>
-            <p className="stat-value">3 views</p>
-            <p className="stat-label">Library, Tagged, and Manage</p>
-          </article>
-          <article>
-            <p className="stat-value">0$ beta</p>
-            <p className="stat-label">free while we shape v1 with users</p>
-          </article>
-        </section>
-
-        <section id="preview" className="preview-card">
-          <div className="preview-head">
-            <p>Desktop sample workflow</p>
-            <span>Waveforms 33 / 120</span>
-          </div>
-          <div className="preview-body">
-            <aside>
-              <h3>Filters</h3>
-              <ul>
-                <li>All samples</li>
-                <li>Favorites</li>
-                <li>Tagged</li>
-                <li>Missing files</li>
-              </ul>
-            </aside>
-            <div className="table-sim">
-              {[
-                'Arp_Sequence_Amin',
-                'Bass_Sub_Csharp',
-                'Cafe_Chatter',
-                'City_Traffic_AM',
-                'Chord_Warm_Dm',
-              ].map((name, idx) => (
-                <div className="row" key={name}>
-                  <p>{name}</p>
-                  <p>{idx % 2 === 0 ? 'WAV' : 'FLAC'}</p>
-                  <p>{idx % 2 === 0 ? 'A min' : 'C maj'}</p>
-                  <p>{idx % 2 === 0 ? '120' : '114'}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="feature-grid">
-          <article>
-            <h3>Tag-first workflow</h3>
-            <p>
-              Tag drums, loops, tonal one-shots, and mood in seconds so your next session
-              starts with options, not scrolling.
-            </p>
-          </article>
-          <article>
-            <h3>Built for real folders</h3>
-            <p>
-              Point to existing drives and directories. No forced cloud migration. Your
-              library stays where you already keep it.
-            </p>
-          </article>
-          <article>
-            <h3>Waveform confidence</h3>
-            <p>
-              Preview and scrub audio instantly, compare tonal content, and avoid wrong
-              picks before loading into your DAW.
-            </p>
-          </article>
-        </section>
-
-        <section id="beta" className="beta">
-          <div>
-            <p className="kicker">Pricing during beta</p>
-            <h3>Free while we iterate with producers</h3>
-            <p>
-              No credit card. No gimmicks. Join, test aggressively, and help shape what
-              Wave Silo becomes before public launch.
-            </p>
-          </div>
-          <a href="#" className="btn btn-primary">
-            Request Beta Invite
-          </a>
+          <p className="sub center">
+            Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.
+            {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
+          </p>
         </section>
       </main>
 
-      <footer>
-        <p>Wave Silo</p>
-        <p>Sample manager for serious catalog energy.</p>
+      <footer className="foot">
+        <div className="brand"><Logo /><span>Wave Silo</span></div>
+        <p>Made for producers and sound designers. &copy; {new Date().getFullYear()}</p>
       </footer>
     </div>
   )
 }
 
-export default App
+function Logo() {
+  return <img className="logo" src={logo} alt="Wave Silo" />
+}
