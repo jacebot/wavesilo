@@ -29,7 +29,8 @@ Free, all three platforms — grab it at **[wavesilo.com](https://wavesilo.com)*
 | 🍎 macOS (Apple Silicon) | `Wave.Silo-<v>-arm64.dmg` |
 | 🍎 macOS (Intel) | `Wave.Silo-<v>.dmg` |
 | 🪟 Windows | `Wave.Silo.Setup-<v>.exe` |
-| 🐧 Linux | `Wave.Silo-<v>.AppImage` |
+| 🐧 Linux (Debian/Ubuntu) | `Wave.Silo-<v>.deb` |
+| 🐧 Linux (other) | `Wave.Silo-<v>.tar.gz` |
 
 > Unsigned for now — on macOS right‑click → **Open**; on Windows choose **More info → Run anyway**.
 
