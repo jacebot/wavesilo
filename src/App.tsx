@@ -57,13 +57,13 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v0.2.1`
+const REL = `${REPO}/releases/download/v0.2.2`
 
 const downloads = [
-  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.1-arm64.dmg` },
-  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.1.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.1.exe` },
-  { key: 'linux', os: 'Linux', note: 'AppImage', href: `${REL}/Wave.Silo-0.2.1.AppImage` },
+  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.2-arm64.dmg` },
+  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.2.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.2.exe` },
+  { key: 'linux', os: 'Linux', note: 'AppImage', href: `${REL}/Wave.Silo-0.2.2.AppImage` },
 ]
 
 const features = [
