@@ -1,64 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --text: #edf7f8;
+  --muted: #96adb0;
+  --line: rgba(147, 206, 212, 0.22);
+  --bg-0: #06131a;
+  --bg-1: #081018;
+  --panel: rgba(6, 16, 25, 0.56);
+  --panel-2: rgba(15, 27, 39, 0.72);
+  --panel-soft: rgba(11, 24, 34, 0.72);
+  --row-alt: rgba(130, 177, 180, 0.06);
+  --accent: #3fd4d0;
+  --accent-2: #f1713e;
+  --wave-top: #79f2d6;
+  --wave-bottom: #57a4f5;
+  --chip-active: rgba(95, 223, 218, 0.2);
+  --glow-a: rgba(61, 221, 205, 0.2);
+  --glow-b: rgba(241, 113, 62, 0.18);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font-family: 'Manrope', sans-serif;
   color: var(--text);
-  background: var(--bg);
+  font-size: 17px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
@@ -67,45 +36,62 @@ body {
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+h2,
+h3 {
   margin: 0;
+  font-family: 'Sora', sans-serif;
+  color: var(--text);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a,
+button {
+  color: inherit;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+#root {
+  min-height: 100vh;
+}
+
+.theme-frost {
+  --text: #071827;
+  --muted: #4f6478;
+  --line: rgba(37, 71, 107, 0.2);
+  --bg-0: #f6f9ff;
+  --bg-1: #edf7ff;
+  --panel: rgba(255, 255, 255, 0.68);
+  --panel-2: rgba(237, 247, 255, 0.74);
+  --panel-soft: rgba(252, 255, 255, 0.82);
+  --row-alt: rgba(88, 125, 170, 0.08);
+  --accent: #0d7aa7;
+  --accent-2: #00b89a;
+  --wave-top: #16c7cf;
+  --wave-bottom: #5a7bea;
+  --chip-active: rgba(14, 119, 172, 0.16);
+  --glow-a: rgba(58, 133, 238, 0.22);
+  --glow-b: rgba(10, 190, 160, 0.2);
+}
+
+.theme-ember {
+  --text: #fff2e5;
+  --muted: #cab09c;
+  --line: rgba(255, 169, 108, 0.25);
+  --bg-0: #1a0d07;
+  --bg-1: #170b05;
+  --panel: rgba(45, 18, 8, 0.62);
+  --panel-2: rgba(61, 21, 11, 0.74);
+  --panel-soft: rgba(52, 20, 9, 0.72);
+  --row-alt: rgba(243, 140, 72, 0.08);
+  --accent: #ff8844;
+  --accent-2: #ffcb61;
+  --wave-top: #ffcf72;
+  --wave-bottom: #ff7643;
+  --chip-active: rgba(255, 149, 70, 0.25);
+  --glow-a: rgba(255, 184, 79, 0.19);
+  --glow-b: rgba(255, 121, 72, 0.2);
+}
+
+@media (max-width: 640px) {
+  :root {
+    font-size: 16px;
+  }
 }
