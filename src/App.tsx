@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import shotDark from './assets/screenshot-dark.png'
 import shotLight from './assets/screenshot.png'
@@ -224,6 +225,7 @@ export default function App() {
         <div className="brand"><Logo /><span>Wave Silo</span></div>
         <p>Made for producers and sound designers. &copy; {new Date().getFullYear()}</p>
       </footer>
+      <Analytics />
     </div>
   )
 }
