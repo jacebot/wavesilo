@@ -99,11 +99,10 @@ export default function App() {
 
   const cycle = () => setMode(mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system')
 
-  // Detect the visitor's OS (and Mac CPU arch) to highlight the right download.
-  // Default Mac to Apple Silicon, then correct to Intel via two signals:
-  // Chromium exposes arch through userAgentData; Safari doesn't, so we fall back
-  // to the WebGL renderer — Apple Silicon reports "Apple GPU", Intel Macs an
-  // Intel/AMD GPU.
+  // Highlight the visitor's download. OS comes from the UA. Mac CPU arch only
+  // comes from Chromium's userAgentData — Safari hides it (and masks the WebGL
+  // renderer to "Apple GPU" even on Intel), so on Safari we highlight BOTH Mac
+  // builds ('mac') rather than confidently recommending the wrong one.
   const [rec, setRec] = useState('')
   useEffect(() => {
     const ua = navigator.userAgent
@@ -111,15 +110,11 @@ export default function App() {
     if (/Android/i.test(ua)) return
     if (/Linux|X11/i.test(ua)) return setRec('linux')
     if (/Mac/i.test(ua)) {
-      setRec('mac-arm')
+      setRec('mac')
       const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
-      if (uad?.getHighEntropyValues) {
-        uad.getHighEntropyValues(['architecture']).then((v) => {
-          if (v?.architecture === 'x86') setRec('mac-intel')
-        }).catch(() => {})
-      } else if (isIntelMacGPU()) {
-        setRec('mac-intel')
-      }
+      uad?.getHighEntropyValues?.(['architecture'])
+        .then((v) => setRec(v?.architecture === 'x86' ? 'mac-intel' : 'mac-arm'))
+        .catch(() => {})
     }
   }, [])
 
@@ -211,7 +206,7 @@ export default function App() {
           <p className="lead center">Free. No account. Pick your platform.</p>
           <div className="dl-grid">
             {downloads.map((d) => (
-              <a key={d.key} className={`dl ${d.key === rec ? 'dl-primary' : ''}`} href={d.href}>
+              <a key={d.key} className={`dl ${d.key === rec || (rec === 'mac' && d.key.startsWith('mac')) ? 'dl-primary' : ''}`} href={d.href}>
                 {d.key === rec && <span className="dl-badge">Recommended</span>}
                 <span className="dl-os">{d.os}</span>
                 <span className="dl-note">{d.note}</span>
@@ -231,19 +226,6 @@ export default function App() {
       </footer>
     </div>
   )
-}
-
-// Safari can't report CPU arch, but the WebGL renderer distinguishes an Apple
-// Silicon GPU ("Apple GPU") from an Intel/AMD one on older Macs.
-function isIntelMacGPU(): boolean {
-  try {
-    const gl = document.createElement('canvas').getContext('webgl')
-    const ext = gl?.getExtension('WEBGL_debug_renderer_info')
-    const r = ext ? String(gl?.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : ''
-    return /intel|amd|radeon|nvidia|geforce/i.test(r)
-  } catch {
-    return false
-  }
 }
 
 function Logo() {
