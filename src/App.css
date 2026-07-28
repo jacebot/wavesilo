@@ -174,7 +174,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* ---- "your DAW treats the crate as an afterthought" ---- */
 .daw-section { padding-top: 24px; padding-bottom: 24px; }
 .daw-section .frow-text > p { color: var(--muted); font-size: 15.5px; margin: 0 0 16px; }
-.daw-section .daw-punch { color: var(--text); font-size: 16.5px; line-height: 1.55; margin-top: 22px; }
+.daw-section .frow-text p.daw-punch { color: var(--text); font-size: 16.5px; line-height: 1.55; margin: 30px 0 0; }
 .daw-stack { position: relative; height: 430px; }
 .daw-stack img {
   position: absolute;
