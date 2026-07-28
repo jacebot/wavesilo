@@ -170,6 +170,33 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ---- showcase (alternating feature rows) ---- */
 .showcase { width: min(1160px, 92%); margin: 0 auto; padding: 64px 0; }
+
+/* ---- "your DAW treats the crate as an afterthought" ---- */
+.daw-section { padding-top: 24px; padding-bottom: 24px; }
+.daw-section .frow-text > p { color: var(--muted); font-size: 15.5px; margin: 0 0 16px; }
+.daw-section .daw-punch { color: var(--text); font-size: 16.5px; line-height: 1.55; margin-top: 22px; }
+.daw-stack { position: relative; height: 430px; }
+.daw-stack img {
+  position: absolute;
+  width: 210px; height: 300px;
+  object-fit: cover; object-position: top;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  box-shadow: 0 26px 60px -22px rgba(0, 0, 0, 0.75);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.daw-stack img:nth-child(1) { left: 3%;  top: 44px; transform: rotate(-6deg); z-index: 1; }
+.daw-stack img:nth-child(2) { left: 29%; top: 6px;  transform: rotate(3deg);  z-index: 3; }
+.daw-stack img:nth-child(3) { left: 55%; top: 62px; transform: rotate(8deg);  z-index: 2; }
+.daw-stack img:hover { transform: rotate(0) scale(1.05); z-index: 5; box-shadow: 0 34px 70px -20px rgba(0, 0, 0, 0.85); }
+@media (max-width: 860px) {
+  .daw-stack { height: 360px; max-width: 360px; margin: 0 auto; }
+  .daw-stack img { width: 170px; height: 240px; }
+  .daw-stack img:nth-child(1) { left: 0; }
+  .daw-stack img:nth-child(2) { left: 26%; }
+  .daw-stack img:nth-child(3) { left: 52%; }
+}
 .frow {
   display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center;
   margin: 64px 0;

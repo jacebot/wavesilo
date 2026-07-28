@@ -5,6 +5,9 @@ import shotHero from './assets/shot-hero.png'
 import shotLight from './assets/screenshot.png'
 import shotTagged from './assets/shot-tagged.png'
 import shotRecovery from './assets/shot-recovery.png'
+import daw1 from './assets/daw-1.png'
+import daw2 from './assets/daw-2.png'
+import daw3 from './assets/daw-3.png'
 import logo from './assets/logo.png'
 
 const faqs = [
@@ -155,6 +158,27 @@ export default function App() {
 
           <div className="shot hero-shot">
             <img src={shotHero} alt="Wave Silo — Tagged column browser drilling tags into folders, with waveforms, BPM and key" />
+          </div>
+        </section>
+
+        <section className="showcase daw-section">
+          <div className="frow">
+            <div className="frow-text">
+              <h3>In every DAW, the crate is a side panel</h3>
+              <p>And honestly — it&rsquo;s not really their fault. A DAW has to record, mix, arrange, host plugins, do MIDI. Sample browsing gets bolted onto the edge:</p>
+              <ul>
+                <li>Auditioning munged into a cramped pane — wedged between stock loops, cloud stores, and packs you didn&rsquo;t ask for</li>
+                <li>Tiny waveforms you can barely read</li>
+                <li>Panes within panes that are a pain to navigate</li>
+                <li>Mediocre flows that break your momentum</li>
+              </ul>
+              <p className="daw-punch">Wave Silo does the one thing instead — a full-window workspace built for auditioning: big waveforms, live metering, BPM &amp; key at a glance, and drag-straight-to-your-DAW.</p>
+            </div>
+            <div className="daw-stack" aria-hidden>
+              <img src={daw1} alt="" />
+              <img src={daw2} alt="" />
+              <img src={daw3} alt="" />
+            </div>
           </div>
         </section>
 
