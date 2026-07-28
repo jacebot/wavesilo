@@ -253,3 +253,6 @@ main, .nav, .foot { position: relative; z-index: 1; }
   .frow { grid-template-columns: 1fr; gap: 22px; margin: 44px 0; }
   .frow.reverse .frow-img { order: 0; }
 }
+
+.foot-link { color: var(--muted); }
+.foot-link:hover { color: var(--teal); }

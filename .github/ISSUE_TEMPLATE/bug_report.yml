@@ -1,0 +1,44 @@
+name: 🐛 Bug report
+description: Something's broken or behaving wrong
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping make Wave Silo better. A few details go a long way.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open …
+        2. Click …
+        3. See …
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Windows
+        - Linux (Debian/Ubuntu)
+        - Linux (other)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Wave Silo version
+      description: The version you downloaded (e.g. 0.2.10)
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots / anything else
+      description: Drag images right in. Roughly how big is your library (file count)?

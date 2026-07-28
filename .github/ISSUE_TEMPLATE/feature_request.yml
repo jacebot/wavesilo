@@ -1,0 +1,16 @@
+name: 💡 Feature request / feedback
+description: An idea, a workflow gap, or general feedback
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: What's the idea, and what problem does it solve for you?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: How would you use it?
+      description: A quick example from your own workflow helps a lot.

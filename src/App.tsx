@@ -135,6 +135,7 @@ export default function App() {
         <nav>
           <a href="#features">Features</a>
           <a href="#preview">Screenshots</a>
+          <a href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Feedback</a>
           <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
             <ThemeIcon mode={mode} />
           </button>
@@ -249,6 +250,7 @@ export default function App() {
 
       <footer className="foot">
         <div className="brand"><Logo /><span>Wave Silo</span></div>
+        <a className="foot-link" href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Report a bug / feedback &rarr;</a>
         <p>Made for producers and sound designers. &copy; {new Date().getFullYear()}</p>
       </footer>
       <Analytics />
