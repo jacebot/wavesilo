@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import shotDark from './assets/screenshot-dark.png'
+import shotHero from './assets/shot-hero.png'
 import shotLight from './assets/screenshot.png'
 import shotTagged from './assets/shot-tagged.png'
 import shotRecovery from './assets/shot-recovery.png'
@@ -153,7 +154,7 @@ export default function App() {
           <p className="sub">macOS · Windows · Linux — unsigned beta, free core forever.</p>
 
           <div className="shot hero-shot">
-            <img src={shotDark} alt="Wave Silo — sample library with waveforms, BPM and key" />
+            <img src={shotHero} alt="Wave Silo — Tagged column browser drilling tags into folders, with waveforms, BPM and key" />
           </div>
         </section>
 
