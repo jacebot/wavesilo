@@ -116,6 +116,10 @@ export default function App() {
     if (/Android/i.test(ua)) return
     if (/Linux|X11/i.test(ua)) {
       setRec('linux')
+      // Firefox has no userAgentData but keeps the real arch in its UA string
+      // ("X11; Linux aarch64"); Chrome freezes its UA to x86_64 and only reveals
+      // arm via UA client hints. Check both so ARM is caught in either browser.
+      if (/aarch64|arm64/i.test(ua)) return setRec('linux-arm')
       const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
       uad?.getHighEntropyValues?.(['architecture'])
         .then((v) => { if (v?.architecture === 'arm') setRec('linux-arm') })
