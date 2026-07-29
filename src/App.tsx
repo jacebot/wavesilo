@@ -62,14 +62,15 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v0.2.11`
+const REL = `${REPO}/releases/download/v0.2.12`
 
 const downloads = [
-  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.11-arm64.dmg` },
-  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.11.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.11.exe` },
-  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-0.2.11.deb` },
+  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.12-arm64.dmg` },
+  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.12.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.12.exe` },
+  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-0.2.12.deb` },
 ]
+const ARM_DEB = `${REL}/Wave.Silo-0.2.12-arm64.deb`
 
 const features = [
   { k: 'drag', title: 'Drag straight into your DAW', body: 'Audition a sample, then drag it onto a track in Ableton, Logic, FL — anywhere. Drag folders in to add them.' },
@@ -113,7 +114,14 @@ export default function App() {
     const ua = navigator.userAgent
     if (/Windows/i.test(ua)) return setRec('win')
     if (/Android/i.test(ua)) return
-    if (/Linux|X11/i.test(ua)) return setRec('linux')
+    if (/Linux|X11/i.test(ua)) {
+      setRec('linux')
+      const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
+      uad?.getHighEntropyValues?.(['architecture'])
+        .then((v) => { if (v?.architecture === 'arm') setRec('linux-arm') })
+        .catch(() => {})
+      return
+    }
     if (/Mac/i.test(ua)) {
       setRec('mac')
       const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
@@ -240,9 +248,14 @@ export default function App() {
               </a>
             ))}
           </div>
+          <p className={`sub center arm-link ${rec === 'linux-arm' ? 'arm-hit' : ''}`}>
+            {rec === 'linux-arm'
+              ? <>On ARM Linux? <a href={ARM_DEB}>Get the arm64 installer &rarr;</a></>
+              : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
+          </p>
           <p className="sub center">
             Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.
-            {' '}Other Linux distros: <a href={`${REL}/Wave.Silo-0.2.11.tar.gz`}>.tar.gz</a>.
+            {' '}Other Linux distros: <a href={`${REL}/Wave.Silo-0.2.12.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>
