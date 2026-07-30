@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Analytics } from '@vercel/analytics/react'
 import './App.css'
-import shotDark from './assets/screenshot-dark.png'
-import shotHero from './assets/shot-hero.png'
-import shotLight from './assets/screenshot.png'
-import shotTagged from './assets/shot-tagged.png'
-import shotRecovery from './assets/shot-recovery.png'
+import shotDark from './assets/screenshot-dark.webp'
+import shotHero from './assets/shot-hero.webp'
+import shotLight from './assets/screenshot.webp'
+import shotTagged from './assets/shot-tagged.webp'
+import shotRecovery from './assets/shot-recovery.webp'
+import shotVcv from './assets/shot-vcv.webp'
 import daw1 from './assets/daw-1.png'
 import daw2 from './assets/daw-2.png'
 import daw3 from './assets/daw-3.png'
@@ -49,6 +50,15 @@ const blocks = [
       'Play and seek the waveform; watch the live frequency spectrum',
       'True per-channel peak metering, plus BPM and musical key',
       'Built-in MIDI synth and piano-roll preview',
+    ],
+  },
+  {
+    img: shotVcv,
+    title: 'Reads VCV Rack & Cardinal patches',
+    points: [
+      'Open a .vcv patch and see every module — and which ones you’re missing',
+      'Missing modules link straight to the VCV library to install',
+      'Open the patch in VCV Rack, or eyeball the whole rack as colored cables',
     ],
   },
   {
@@ -173,7 +183,7 @@ export default function App() {
           <p className="sub">macOS · Windows · Linux — unsigned beta, free core forever.</p>
 
           <div className="shot hero-shot">
-            <img src={shotHero} alt="Wave Silo — Tagged column browser drilling tags into folders, with waveforms, BPM and key" />
+            <img src={shotHero} alt="Wave Silo — dark library of samples with waveforms, BPM, key and categories, and a live colored waveform in the player" />
           </div>
         </section>
 
