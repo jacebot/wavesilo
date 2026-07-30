@@ -180,10 +180,10 @@ export default function App() {
         <section className="showcase daw-section">
           <div className="frow">
             <div className="frow-text">
-              <h3>In every DAW, the crate is a side panel</h3>
-              <p>And honestly — it&rsquo;s not really their fault. A DAW has to record, mix, arrange, host plugins, do MIDI. Sample browsing gets bolted onto the edge:</p>
+              <h3>In every DAW, sample browsing is an afterthought</h3>
+              <p>And honestly, it&rsquo;s not their fault — a DAW has to record, mix, arrange, host plugins, do MIDI. So auditioning gets wedged into a corner:</p>
               <ul>
-                <li>Auditioning munged into a cramped pane — wedged between stock loops, cloud stores, and packs you didn&rsquo;t ask for</li>
+                <li>A cramped little pane — squeezed between stock loops, cloud stores, and packs you didn&rsquo;t ask for</li>
                 <li>Tiny waveforms you can barely read</li>
                 <li>Panes within panes that are a pain to navigate</li>
                 <li>Mediocre flows that break your momentum</li>
