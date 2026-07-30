@@ -19,6 +19,7 @@ const faqs = [
   { q: 'Why does my OS warn about an unidentified developer?', a: 'The builds aren’t code-signed yet. On macOS, right-click the app → Open. On Windows, choose More info → Run anyway. Proper signing is on the roadmap.' },
   { q: 'Will it handle my huge collection?', a: 'Yes — it scans and indexes tens of thousands of samples in the background while you keep browsing.' },
   { q: 'Which platforms?', a: 'macOS (Intel + Apple Silicon), Windows, and Linux.' },
+  { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox Electron relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
 ]
 
 const blocks = [
@@ -62,15 +63,16 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v0.2.15`
+const REL = `${REPO}/releases/download/v0.2.16`
 
 const downloads = [
-  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.15-arm64.dmg` },
-  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.15.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.15.exe` },
-  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-0.2.15.deb` },
+  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.2.16-arm64.dmg` },
+  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-0.2.16.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.0.2.16.exe` },
+  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-0.2.16.deb` },
 ]
-const ARM_DEB = `${REL}/Wave.Silo-0.2.15-arm64.deb`
+const ARM_DEB = `${REL}/Wave.Silo-0.2.16-arm64.deb`
+const VERSION = (REL.match(/v(\d+\.\d+\.\d+)/) ?? [])[1] ?? ''
 
 const features = [
   { k: 'drag', title: 'Drag straight into your DAW', body: 'Audition a sample, then drag it onto a track in Ableton, Logic, FL — anywhere. Drag folders in to add them.' },
@@ -241,7 +243,7 @@ export default function App() {
         </section>
 
         <section id="download" className="download">
-          <h2>Download Wave Silo</h2>
+          <h2>Download Wave Silo {VERSION && <span className="ver">v{VERSION}</span>}</h2>
           <p className="lead center">Free. No account. Pick your platform.</p>
           <div className="dl-grid">
             {downloads.map((d) => (
@@ -259,7 +261,7 @@ export default function App() {
           </p>
           <p className="sub center">
             Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.
-            {' '}Other Linux distros: <a href={`${REL}/Wave.Silo-0.2.15.tar.gz`}>.tar.gz</a>.
+            {' '}Other Linux distros: <a href={`${REL}/Wave.Silo-0.2.16.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>

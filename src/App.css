@@ -143,6 +143,13 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .features h2, .showcase h2, .download h2, .faq h2 {
   text-align: center; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.02em; margin: 0 0 44px; font-weight: 800;
 }
+.ver {
+  display: inline-block; vertical-align: middle; transform: translateY(-3px);
+  margin-left: 12px; padding: 4px 11px; border-radius: 999px;
+  font-size: 0.4em; font-weight: 600; letter-spacing: 0.04em; font-family: var(--mono, ui-monospace, monospace);
+  color: var(--teal); background: color-mix(in srgb, var(--teal) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--teal) 32%, transparent);
+}
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .card {
   background: linear-gradient(180deg, var(--panel), var(--bg-2));
