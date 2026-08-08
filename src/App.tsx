@@ -134,11 +134,25 @@ export default function App() {
     }
   }, [])
 
+  // Nav is transparent over the hero (its Download would double the hero CTA);
+  // once the hero CTA scrolls above the fold, fade the bar in and reveal Download.
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const cta = document.querySelector('.hero .cta')
+    if (!cta) return
+    const io = new IntersectionObserver(
+      ([e]) => setScrolled(!e.isIntersecting && e.boundingClientRect.top < 0),
+      { threshold: 0 },
+    )
+    io.observe(cta)
+    return () => io.disconnect()
+  }, [])
+
   return (
     <div className="site">
       <div className="glow" aria-hidden />
 
-      <header className="nav">
+      <header className={`nav${scrolled ? ' scrolled' : ''}`}>
         <a className="brand" href="#top">
           <Logo />
           <span>Wave Silo</span>
@@ -156,36 +170,38 @@ export default function App() {
 
       <main id="top">
         <section className="hero">
-          <p className="eyebrow">Offline sample library manager · free</p>
-          <h1>Your samples,<br /><span className="grad">finally organized.</span></h1>
-          <p className="lead">
-            Wave Silo makes your messy sample folders actually searchable: waveform preview,
-            real BPM &amp; key analysis, plus tags and ratings. Audition a sound, then drag it
-            straight onto a track in your DAW. All local, no account, no subscription.
-          </p>
-          <div className="cta">
-            <a className="btn btn-primary" href="#download">Download Free</a>
-            <a className="btn btn-ghost" href={REPO}>View Releases</a>
+          <div className="hero-copy">
+            <p className="eyebrow">Offline sample library manager · free</p>
+            <h1>Your samples,<br /><span className="grad">finally organized.</span></h1>
+            <p className="lead">
+              Wave Silo makes your messy sample folders actually searchable: waveform preview,
+              real BPM &amp; key analysis, plus tags and ratings. Audition a sound, then drag it
+              straight onto a track in your DAW. All local, no account, no subscription.
+            </p>
+            <div className="cta">
+              <a className="btn btn-primary" href="#download">Download Free</a>
+              <a className="btn btn-ghost" href={REPO}>View Releases</a>
+            </div>
+            <p className="sub">macOS · Windows · Linux. Unsigned beta, free core forever.</p>
           </div>
-          <p className="sub">macOS · Windows · Linux. Unsigned beta, free core forever.</p>
 
           <div className="shot hero-shot">
             <img src={shotHero} alt="Wave Silo dark library of samples with waveforms, BPM, key and categories, and a live colored waveform in the player" />
           </div>
         </section>
 
+        {/* PROBLEM — down in the recessed orange well */}
         <section className="showcase daw-section">
           <div className="frow">
             <div className="frow-text">
               <h3>In every DAW, sample browsing is an afterthought</h3>
-              <p>And honestly, it&rsquo;s not their fault. A DAW has to record, mix, arrange, host plugins, do MIDI. So auditioning gets wedged into a corner:</p>
+              <p>A DAW has a hundred jobs, so it gets shoved into a corner:</p>
               <ul>
                 <li>A cramped little pane, squeezed between stock loops, cloud stores, and packs you didn&rsquo;t ask for</li>
-                <li>Tiny waveforms you can barely read</li>
                 <li>Panes within panes that are a pain to navigate</li>
+                <li>Tiny waveforms you can barely read</li>
                 <li>Mediocre flows that break your momentum</li>
               </ul>
-              <p className="daw-punch">Wave Silo does the one thing instead. A full-window workspace built for auditioning: big waveforms, live metering, BPM &amp; key at a glance, and drag straight to your DAW.</p>
             </div>
             <div className="daw-stack" aria-hidden>
               <img src={daw1} alt="" />
@@ -195,8 +211,19 @@ export default function App() {
           </div>
         </section>
 
+        {/* SOLUTION — climbs back out onto the calm dark bg */}
+        <section className="solution">
+          <p className="solution-punch">Wave Silo has one vision, and gets the whole window.</p>
+          <ul className="daw-does">
+            <li>Big waveforms</li>
+            <li>Live metering</li>
+            <li>BPM &amp; key at a glance</li>
+            <li>Drag-and-drop to your DAW</li>
+          </ul>
+        </section>
+
         <section id="features" className="features">
-          <h2>Dig through thousands of sounds, fast</h2>
+          <h2>Dig deep through all your samples, presets, and MIDI files</h2>
           <div className="bento">
             <article className="cell a-drag">
               <div className="head">

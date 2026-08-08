@@ -15,8 +15,8 @@
   --lime: #b4f125;
   --btn-text: #3a0f0a; /* ink on accent */
   --logo-ink: #f5f1e6; /* silo mark: near-white bone on dark */
-  /* Hero gradient text: bone → lit persimmon → base → violet tail (VU energy). */
-  --grad: linear-gradient(100deg, #e9e2cf, #f2705c 35%, #d94a3f 65%, #c24ff0);
+  /* Hero gradient text: two brand stops, bone → persimmon. No rainbow tail. */
+  --grad: linear-gradient(100deg, #e9e2cf, #f2705c 45%, #d94a3f);
 }
 
 :root[data-theme="light"] {
@@ -35,8 +35,8 @@
   --violet: #5b60b8;
   --lime: #6f9c14;
   --logo-ink: #23201a; /* silo mark: ink on cream */
-  /* Bone is invisible on cream — the gradient deepens, violet tail kept. */
-  --grad: linear-gradient(100deg, #7e2119, #c13a31 55%, #8b30b8);
+  /* Bone is invisible on cream — deepen through two persimmon stops, no magenta. */
+  --grad: linear-gradient(100deg, #7e2119, #c13a31);
 }
 
 * { box-sizing: border-box; }
@@ -52,7 +52,7 @@ img { max-width: 100%; display: block; }
 
 .site {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip, not hidden — hidden would break the sticky nav */
   min-height: 100vh;
   background:
     radial-gradient(1100px 600px at 78% -8%, rgba(217, 74, 63, 0.14), transparent 60%),
@@ -80,29 +80,51 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ---- nav ---- */
 .nav {
+  position: sticky; top: 0; z-index: 50;
   width: min(1160px, 92%); margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 0;
+  padding: 18px 0;
 }
-.brand { display: flex; align-items: center; gap: 13px; font-weight: 600; font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+/* full-width blurred bar that fades in once you scroll past the hero */
+.nav::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 100vw; transform: translateX(-50%); z-index: -1;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.nav.scrolled::before { opacity: 1; }
+.brand { display: flex; align-items: center; gap: 13px; font-weight: 600; font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
 .brand span { transform: translateY(0.5px); } /* optical centering vs the icon */
 .logo { width: 42px; height: 42px; border-radius: 9px; object-fit: cover; }
 .nav nav { display: flex; align-items: center; gap: 26px; font-size: 14.5px; color: var(--muted); }
 .nav nav a:hover { color: var(--text); }
 .pill {
-  padding: 8px 16px; border-radius: 999px;
+  padding: 9px 18px; border-radius: 12px;
   background: var(--accent); color: var(--btn-text) !important; font-weight: 700;
+  opacity: 0; transform: translateX(6px); pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease, background 0.15s;
 }
+.nav.scrolled .pill { opacity: 1; transform: none; pointer-events: auto; }
 .pill:hover { background: var(--accent-2); }
 
 /* ---- hero ---- */
-.hero { width: min(1160px, 92%); margin: 0 auto; padding: 46px 0 20px; text-align: center; }
+.hero {
+  width: min(1160px, 92%); margin: 0 auto; padding: 40px 0 32px; text-align: left;
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center;
+}
+.hero-copy { min-width: 0; animation: heroFade 0.7s ease both; }
+@keyframes heroFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes heroSlide { from { opacity: 0; transform: translateX(56px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy, .hero-shot { animation: none; }
+}
 .eyebrow {
-  display: inline-block; margin: 0 0 18px;
-  font-family: var(--font-dense);
-  font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  display: block; margin: 0 0 18px;
+  font-family: var(--mono);
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
   color: var(--accent);
-  padding: 6px 14px; border: 1px solid var(--border); border-radius: 999px; background: rgba(217,74,63,0.06);
 }
 .hero h1 {
   margin: 0; font-size: clamp(38px, 6vw, 68px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800;
@@ -112,14 +134,15 @@ main, .nav, .foot { position: relative; z-index: 1; }
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .lead { color: var(--muted); font-size: clamp(16px, 2vw, 19px); max-width: 640px; margin: 22px auto 0; }
+.hero .lead { margin: 22px 0 0; }
 .lead.center { text-align: center; }
-.cta { display: flex; gap: 14px; justify-content: center; margin: 30px 0 12px; flex-wrap: wrap; }
+.cta { display: flex; gap: 14px; justify-content: flex-start; margin: 30px 0 12px; flex-wrap: wrap; }
 .btn {
   padding: 13px 26px; border-radius: 12px; font-weight: 700; font-size: 15.5px;
   transition: transform 0.08s, background 0.15s, border-color 0.15s;
 }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--accent); color: var(--btn-text); box-shadow: 0 10px 30px rgba(217,74,63,0.25); }
+.btn-primary { background: var(--accent); color: var(--btn-text); }
 .btn-primary:hover { background: var(--accent-2); }
 .btn-ghost { border: 1px solid var(--border); color: var(--text); background: rgba(255,255,255,0.02); }
 .btn-ghost:hover { border-color: var(--accent); }
@@ -134,7 +157,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   font-size: 14.5px;
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 9px 14px;
   display: inline-block;
 }
@@ -144,23 +167,39 @@ main, .nav, .foot { position: relative; z-index: 1; }
   border: 1px solid var(--border);
   box-shadow: 0 40px 90px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.02) inset;
 }
-.hero-shot { max-width: 1080px; }
+.hero-shot {
+  margin: 0; justify-self: start;
+  width: 132%; max-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 76%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 76%, transparent 100%);
+  animation: heroSlide 0.85s 0.12s ease both;
+}
 .shot.wide { max-width: 1000px; }
 
 /* ---- features ---- */
-.features { width: min(1160px, 92%); margin: 0 auto; padding: 96px 0 40px; }
+/* full-width bone (dark) / ink (light) border-bands frame the bento */
+.features {
+  width: 100%; margin: 40px 0; padding: 76px 0;
+  border-top: 1px solid rgba(233, 226, 207, 0.28);
+  border-bottom: 1px solid rgba(233, 226, 207, 0.28);
+}
+:root[data-theme="light"] .features {
+  border-top-color: rgba(6, 8, 14, 0.16);
+  border-bottom-color: rgba(6, 8, 14, 0.16);
+}
 .features h2, .showcase h2, .download h2, .faq h2 {
   text-align: center; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.02em; margin: 0 0 44px; font-weight: 800;
 }
 .ver {
   display: inline-block; vertical-align: middle; transform: translateY(-3px);
-  margin-left: 12px; padding: 4px 11px; border-radius: 999px;
+  margin-left: 12px; padding: 4px 11px; border-radius: 8px;
   font-size: 0.4em; font-weight: 600; letter-spacing: 0.04em; font-family: var(--mono, ui-monospace, monospace);
   color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
 }
 /* ---- feature bento: varied sizes + real mini-UI, not a uniform icon grid ---- */
 .bento {
+  width: min(1160px, 92%); margin: 0 auto;
   display: grid; gap: 16px;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 174px;
@@ -173,7 +212,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .cell {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, var(--panel), var(--bg-2));
-  border: 1px solid var(--border); border-radius: 18px;
+  border: 1px solid var(--border); border-radius: 14px;
   padding: 20px; display: flex; flex-direction: column; gap: 10px;
   transition: border-color .18s, transform .18s;
 }
@@ -243,12 +282,18 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .sw i { width: 26px; height: 26px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--text) 14%, transparent); }
 
 @media (max-width: 860px) {
-  .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 158px;
-    grid-template-areas: "drag drag" "drag drag" "bpm bpm" "data fmt" "scan scan" "tag tag" "make make" "lose wrangle"; }
+  .bento { grid-template-columns: 1fr; grid-auto-rows: minmax(150px, auto);
+    grid-template-areas: "drag" "bpm" "data" "fmt" "scan" "tag" "make" "lose" "wrangle"; }
 }
 
 /* ---- faq ---- */
-.faq { width: min(820px, 92%); margin: 0 auto; padding: 60px 0; }
+/* full-width orange border-bands frame the FAQ (mirrors the bento's bone/ink bands) */
+.faq {
+  width: 100%; margin: 40px 0; padding: 76px 0;
+  border-top: 1px solid color-mix(in srgb, var(--orange) 55%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--orange) 55%, transparent);
+}
+.faq-list { width: min(820px, 92%); margin-left: auto; margin-right: auto; }
 .faq-list { display: grid; gap: 12px; }
 .faq details {
   border: 1px solid var(--border); border-radius: 12px; background: var(--panel);
@@ -269,10 +314,59 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* ---- showcase (alternating feature rows) ---- */
 .showcase { width: min(1160px, 92%); margin: 0 auto; padding: 64px 0; }
 
-/* ---- "your DAW treats the crate as an afterthought" ---- */
-.daw-section { padding-top: 24px; padding-bottom: 24px; }
-.daw-section .frow-text > p { color: var(--muted); font-size: 15.5px; margin: 0 0 16px; }
-.daw-section .frow-text p.daw-punch { color: var(--text); font-size: 16.5px; line-height: 1.55; margin: 30px 0 0; }
+/* ---- "your DAW treats browsing as an afterthought" — full-bleed contrasting band, centered ---- */
+.daw-section {
+  width: 100%; max-width: none; margin: 0;
+  padding: 72px 0;
+  /* Our orange, flat. Ink text, bone nibs. Light ink vignette + inner shadows read as a recessed gap. */
+  background:
+    radial-gradient(130% 130% at 50% 45%, transparent 60%, rgba(6, 8, 14, 0.34)),
+    var(--orange);
+  border-top: 1px solid rgba(6, 8, 14, 0.5);
+  border-bottom: 1px solid rgba(6, 8, 14, 0.5);
+  /* Top & bottom inner shadow: hero and bento appear to sit over it, like a gap. */
+  box-shadow:
+    inset 0 26px 40px -28px rgba(6, 8, 14, 0.72),
+    inset 0 -26px 40px -28px rgba(6, 8, 14, 0.72);
+  color: #06080e;
+}
+.daw-section .frow {
+  width: min(1000px, 92%); margin: 0 auto;
+  grid-template-columns: 1fr; gap: 40px; text-align: center;
+}
+.daw-section .frow-text { display: flex; flex-direction: column; align-items: center; }
+.daw-section .frow-text h3 { max-width: 720px; }
+.daw-section .frow-text > p { color: #06080e; font-size: 15.5px; margin: 0 0 16px; max-width: 680px; }
+.daw-section .frow-text li { color: #06080e; }
+.daw-section .frow-text li::before { background: var(--bone); box-shadow: 0 0 12px rgba(233, 226, 207, 0.65); }
+/* SOLUTION — climbs out of the well onto the calm bg */
+.solution { width: min(880px, 92%); margin: 0 auto; padding: 100px 0 92px; text-align: center; }
+.solution-punch {
+  margin: 0 auto; max-width: 620px; text-wrap: balance;
+  font-size: clamp(19px, 2.3vw, 25px); font-weight: 700; letter-spacing: -0.01em;
+  line-height: 1.35; color: var(--text);
+}
+/* "what it does" — small centered dashed list, glowing bone dashes on dark */
+.daw-does {
+  list-style: none; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  max-width: 700px; margin: 22px auto 0; gap: 12px 26px;
+}
+.daw-does li {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--muted); font-size: 15px; font-weight: 600;
+}
+.daw-does li::before {
+  content: ""; width: 14px; height: 3px; border-radius: 2px;
+  background: var(--bone); box-shadow: 0 0 10px rgba(233, 226, 207, 0.55);
+}
+/* bone vanishes on cream — use the accent dash in light mode */
+:root[data-theme="light"] .daw-does li::before { background: var(--accent); box-shadow: none; }
+.daw-section .frow-text ul {
+  width: 100%; max-width: 760px; margin: 6px auto 0;
+  grid-template-columns: 1fr 1fr; gap: 12px 34px; text-align: left;
+}
+.daw-section .daw-stack { width: 480px; max-width: 100%; margin: 4px auto 0; }
 .daw-stack { position: relative; height: 430px; }
 .daw-stack img {
   position: absolute;
@@ -302,6 +396,8 @@ main, .nav, .foot { position: relative; z-index: 1; }
   margin: 64px 0;
 }
 .frow .frow-img { margin: 0; }
+/* reversed rows: mirror the ratio so the image column stays the larger one on both sides */
+.frow.reverse { grid-template-columns: 0.85fr 1.15fr; }
 .frow.reverse .frow-img { order: 2; }
 .frow-text h3 { font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; margin: 0 0 18px; font-weight: 800; }
 .frow-text ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 13px; }
@@ -329,7 +425,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   background: var(--accent); color: var(--btn-text);
   font-family: var(--font-dense);
   font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em;
-  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  padding: 3px 10px; border-radius: 8px; white-space: nowrap;
 }
 .dl:hover { border-color: var(--accent); transform: translateY(-2px); }
 .dl-os { font-weight: 700; font-size: 16px; }
@@ -349,8 +445,18 @@ main, .nav, .foot { position: relative; z-index: 1; }
   .grid { grid-template-columns: 1fr; }
   .dl-grid { grid-template-columns: repeat(2, 1fr); }
   .nav nav a:not(.pill) { display: none; }
-  .frow { grid-template-columns: 1fr; gap: 22px; margin: 44px 0; }
+  .frow, .frow.reverse { grid-template-columns: 1fr; gap: 22px; margin: 44px 0; }
   .frow.reverse .frow-img { order: 0; }
+  .hero { grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
+  .hero-shot {
+    width: 100%; -webkit-mask-image: none; mask-image: none;
+    animation: heroFade 0.7s 0.1s ease both;
+  }
+  .daw-section { padding: 52px 0; margin: 36px 0; }
+  .daw-section .frow-text ul { grid-template-columns: 1fr; }
+  .daw-section .daw-stack { width: 300px; }
+  .solution { padding: 64px 0 60px; }
+  .features { padding: 52px 0; margin: 28px 0; }
 }
 
 .foot-link { color: var(--muted); }
