@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Analytics } from '@vercel/analytics/react'
 import './App.css'
+import { LEGAL, type LegalDoc } from './legal'
 import shotDark from './assets/screenshot-dark.webp'
 import shotHero from './assets/shot-hero.webp'
 import shotLight from './assets/screenshot.webp'
@@ -19,7 +20,7 @@ const faqs = [
   { q: 'Why does my OS warn about an unidentified developer?', a: 'The builds aren’t code-signed yet. On macOS, right-click the app → Open. On Windows, choose More info → Run anyway. Proper signing is on the roadmap.' },
   { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
   { q: 'Which platforms?', a: 'macOS (Intel + Apple Silicon), Windows, and Linux.' },
-  { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox Electron relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
+  { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox the app relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
 ]
 
 const blocks = [
@@ -84,10 +85,24 @@ const downloads = [
 const ARM_DEB = `${REL}/Wave.Silo-0.3.13-arm64.deb`
 const VERSION = (REL.match(/v(\d+\.\d+\.\d+)/) ?? [])[1] ?? ''
 
+// A real-looking audio waveform for the audio-engine bento cell: bars with
+// quasi-random peaks under a swell envelope, colored warm -> violet across width.
+const WAVE = Array.from({ length: 64 }, (_, i) => {
+  const t = i / 63
+  const env = 0.35 + 0.65 * Math.pow(Math.sin(t * Math.PI), 0.5)
+  const osc = Math.abs(0.6 * Math.sin(i * 1.7) + 0.4 * Math.sin(i * 0.53 + 1))
+  return Math.round((0.14 + 0.86 * env * osc) * 100)
+})
+const barColor = (t: number) => {
+  const a = [242, 112, 92]
+  const b = [194, 79, 240]
+  return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`
+}
+
 type Mode = 'light' | 'dark' | 'system'
 
 export default function App() {
-  const [mode, setMode] = useState<Mode>(() => (localStorage.getItem('ws-theme') as Mode) || 'system')
+  const [mode, setMode] = useState<Mode>(() => (typeof localStorage !== 'undefined' ? (localStorage.getItem('ws-theme') as Mode) : null) || 'system')
 
   useEffect(() => {
     localStorage.setItem('ws-theme', mode)
@@ -149,6 +164,16 @@ export default function App() {
     return () => io.disconnect()
   }, [])
 
+  // Tiny path router: /tech, /terms, /privacy, /disclaimers render standalone
+  // pages. Each route is prerendered to static HTML at build time (see
+  // scripts/prerender.mjs); the client reads the same path and takes over. On the
+  // server the path comes from __SSR_PATH__; in the browser, from location.
+  const pathname = typeof window !== 'undefined'
+    ? window.location.pathname
+    : ((globalThis as { __SSR_PATH__?: string }).__SSR_PATH__ ?? '/')
+  const legalDoc = LEGAL[pathname.replace(/\/+$/, '') || '/']
+  if (legalDoc) return <LegalShell doc={legalDoc} mode={mode} cycle={cycle} />
+
   return (
     <div className="site">
       <div className="glow" aria-hidden />
@@ -166,25 +191,25 @@ export default function App() {
           <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
             <ThemeIcon mode={mode} />
           </button>
-          <a className="pill" href="#download">Download</a>
+          <a className="pill" href={BUY_URL}>Buy Now</a>
         </nav>
       </header>
 
       <main id="top">
         <section className="hero">
           <div className="hero-copy">
-            <p className="eyebrow">Offline sample library manager · free</p>
+            <p className="eyebrow">Offline audio sample library manager</p>
             <h1>Your samples,<br /><span className="grad">finally organized.</span></h1>
             <p className="lead">
               Wave Silo makes your messy sample folders actually searchable: waveform preview,
               real BPM &amp; key analysis, plus tags and ratings. Audition a sound, then drag it
-              straight onto a track in your DAW. All local, no account, no subscription.
+              straight onto a track in your DAW. All local, no subscription, no account.
             </p>
             <div className="cta">
-              <a className="btn btn-primary" href="#download">Download Free</a>
-              <a className="btn btn-ghost" href={REPO}>View Releases</a>
+              <a className="btn btn-primary" href="#download">Try Pro Free</a>
+              <a className="btn btn-ghost" href="#pricing">See Pricing</a>
             </div>
-            <p className="sub">macOS · Windows · Linux. Unsigned beta, free core forever.</p>
+            <p className="sub">Full Pro trial for 14 days, then free forever. No subscription, no account.</p>
           </div>
 
           <div className="shot hero-shot">
@@ -197,7 +222,6 @@ export default function App() {
           <div className="frow">
             <div className="frow-text">
               <h3>In every DAW, sample browsing is an afterthought</h3>
-              <p>A DAW has a hundred jobs, so it gets shoved into a corner:</p>
               <ul>
                 <li>A cramped little pane, squeezed between stock loops, cloud stores, and packs you didn&rsquo;t ask for</li>
                 <li>Panes within panes that are a pain to navigate</li>
@@ -222,10 +246,11 @@ export default function App() {
             <li>BPM &amp; key at a glance</li>
             <li>Drag-and-drop to your DAW</li>
           </ul>
+          <a className="btn vision-btn" href={BUY_URL}>Buy Now</a>
         </section>
 
         <section id="features" className="features">
-          <h2>Dig deep through all your samples, presets, and MIDI files</h2>
+          <h2>Dig Deep&hellip;<br />Rediscover all your samples, presets and MIDI files.</h2>
           <div className="bento">
             <article className="cell a-drag">
               <div className="head">
@@ -246,16 +271,16 @@ export default function App() {
               <h3>BPM &amp; key, actually analyzed</h3>
               <p>Not filename guessing. Waveform, live spectrum, true tempo, and musical key for every file.</p>
               <div className="viz" aria-hidden>
-                <svg className="wf" viewBox="0 0 200 44" preserveAspectRatio="none"><path d="M0 22 Q6 4 12 22 T24 22 Q30 40 36 22 T48 22 Q54 8 60 22 T72 22 Q78 36 84 22 T96 22 Q102 6 108 22 T120 22 Q126 34 132 22 T144 22 Q150 10 156 22 T168 22 Q174 30 180 22 T200 22" fill="none" stroke="url(#wg)" strokeWidth="2.2" /><defs><linearGradient id="wg" x1="0" x2="1"><stop offset="0" stopColor="#f2705c" /><stop offset="1" stopColor="#c24ff0" /></linearGradient></defs></svg>
+                <div className="wf">{WAVE.map((h, i) => <span key={i} style={{ height: `${h}%`, background: barColor(i / (WAVE.length - 1)) }} />)}</div>
                 <div className="spec"><i style={{ height: '40%' }} /><i style={{ height: '70%' }} /><i style={{ height: '90%' }} /><i style={{ height: '55%' }} /><i style={{ height: '75%' }} /><i style={{ height: '35%' }} /><i style={{ height: '60%' }} /></div>
                 <div className="readout"><b>128</b> BPM &middot; <b>A</b> min</div>
               </div>
             </article>
 
             <article className="cell a-data">
-              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z" /><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" /></svg></div>
               <h3>Your data, on your disk</h3>
-              <p>A local SQLite library. No account, no cloud, no subscription. Fully offline.</p>
+              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z" /><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" /></svg></div>
+              <p>A local SQLite library. No subscription, no cloud, no account. Fully offline.</p>
             </article>
 
             <article className="cell a-fmt">
@@ -291,14 +316,14 @@ export default function App() {
             </article>
 
             <article className="cell a-lose">
-              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 1 1-3-6.7" /><path d="M21 4v5h-5" /></svg></div>
               <h3>Never lose a sample</h3>
+              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 1 1-3-6.7" /><path d="M21 4v5h-5" /></svg></div>
               <p>Moved a file? It spots the orphan and relocates it, tags intact.</p>
             </article>
 
             <article className="cell a-wrangle">
-              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h10" /><circle cx="19" cy="18" r="2" fill="currentColor" stroke="none" /></svg></div>
               <h3>Wrangle a mess in minutes</h3>
+              <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h10" /><circle cx="19" cy="18" r="2" fill="currentColor" stroke="none" /></svg></div>
               <p>Multi-select rows or whole folders. Tag, favorite, and organize at once.</p>
             </article>
           </div>
@@ -366,6 +391,21 @@ export default function App() {
           </div>
         </section>
 
+        <section className="cta-banner">
+          <div className="cta-inner">
+            <h2>Use with your DAW, your workflow.</h2>
+            <ul className="cta-brands">
+              <li>Ableton</li>
+              <li>FL Studio</li>
+              <li>Reaper</li>
+              <li>Logic</li>
+              <li>Studio One</li>
+              <li>Cubase</li>
+            </ul>
+            <p className="cta-disclaimer">All product names, logos, and brands are property of their respective owners. Wave Silo is independent and not affiliated with or endorsed by them.</p>
+          </div>
+        </section>
+
         <section id="faq" className="faq">
           <h2>Questions</h2>
           <div className="faq-list">
@@ -380,7 +420,7 @@ export default function App() {
 
         <section id="download" className="download">
           <h2>Download Wave Silo {VERSION && <span className="ver">v{VERSION}</span>}</h2>
-          <p className="lead center">Free. No account. Pick your platform.</p>
+          <p className="lead center">No account required. Choose your platform.</p>
           <div className="dl-grid">
             {downloads.map((d) => (
               <a key={d.key} className={`dl ${d.key === rec || (rec === 'mac' && d.key.startsWith('mac')) ? 'dl-primary' : ''}`} href={d.href}>
@@ -396,19 +436,72 @@ export default function App() {
               : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
           </p>
           <p className="sub center">
-            Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.
-            {' '}Other Linux distros: <a href={`${REL}/Wave.Silo-0.3.13.tar.gz`}>.tar.gz</a>.
+            Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.<br />
+            Other Linux distros: <a href={`${REL}/Wave.Silo-0.3.13.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>
       </main>
 
-      <footer className="foot">
-        <div className="brand"><Logo /><span>Wave Silo</span></div>
-        <a className="foot-link" href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Report a bug / feedback &rarr;</a>
-        <p>Made for producers and sound designers. &copy; {new Date().getFullYear()}</p>
-      </footer>
+      <SiteFooter />
       <Analytics />
+    </div>
+  )
+}
+
+function SiteFooter() {
+  return (
+    <footer className="foot">
+      <div className="brand"><Logo /><span>Wave Silo</span></div>
+      <a className="foot-link" href="/tech">How Wave Silo works &rarr;</a>
+      <a className="foot-link" href={`${REPO}/releases`}>All releases &amp; versions &rarr;</a>
+      <a className="foot-link" href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Report a bug / feedback &rarr;</a>
+      <nav className="foot-legal">
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/disclaimers">Disclaimers</a>
+      </nav>
+      <p>Made for producers and sound designers. &copy; {new Date().getFullYear()}</p>
+    </footer>
+  )
+}
+
+function LegalShell({ doc, mode, cycle }: { doc: LegalDoc; mode: Mode; cycle: () => void }) {
+  // Per-page SEO: set the document title + meta description for this route.
+  // Navigation between these pages is a full reload, so no cleanup is needed.
+  useEffect(() => {
+    document.title = doc.metaTitle ?? `${doc.title} | Wave Silo`
+    if (doc.metaDescription) {
+      let m = document.querySelector('meta[name="description"]')
+      if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m) }
+      m.setAttribute('content', doc.metaDescription)
+    }
+  }, [doc])
+
+  return (
+    <div className="site legal-site">
+      <header className="nav scrolled">
+        <a className="brand" href="/">
+          <Logo />
+          <span>Wave Silo</span>
+        </a>
+        <nav>
+          <a href="/#features">Features</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/tech">Tech</a>
+          <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
+            <ThemeIcon mode={mode} />
+          </button>
+          <a className="pill" href={BUY_URL}>Buy Now</a>
+        </nav>
+      </header>
+      <main className="legal">
+        <a className="legal-back" href="/">&larr; Back to wavesilo.com</a>
+        <h1>{doc.title}</h1>
+        {doc.updated && <p className="legal-updated">Last updated: {doc.updated}</p>}
+        <article className="legal-body">{doc.body}</article>
+      </main>
+      <SiteFooter />
     </div>
   )
 }

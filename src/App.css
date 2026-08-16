@@ -227,6 +227,18 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 2px;
   color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
 .mark svg { width: 17px; height: 17px; }
+/* small icon cells: the icon is a big faint watermark in the lower-right corner; the
+   heading + text sit full-width on top of it (no wrapping, no clipping) */
+.cell:has(> .mark) { display: block; }
+.cell:has(> .mark) h3 { margin: 0 0 8px; position: relative; z-index: 1; }
+.cell:has(> .mark) p { margin: 0; position: relative; z-index: 1; }
+.cell > .mark {
+  position: absolute; inset: 0; width: auto; height: auto; margin: 0;
+  border: none; background: none; border-radius: 0;
+  display: grid; place-items: center;
+  opacity: 0.1; color: var(--accent); z-index: 0; pointer-events: none;
+}
+.cell > .mark svg { width: auto; height: 90%; }
 
 /* recessed inner surface for the mini-UI, in both themes */
 .well { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px;
@@ -251,8 +263,9 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* audio engine */
 .a-bpm .viz { margin-top: auto; display: flex; align-items: flex-end; gap: 12px; }
-.wf { flex: 1; height: 44px; }
-.spec { display: flex; align-items: flex-end; gap: 2px; height: 30px; }
+.wf { flex: 1; height: 30px; display: flex; align-items: center; gap: 1.5px; }
+.wf span { flex: 1; min-height: 2px; border-radius: 1px; }
+.spec { display: flex; align-items: flex-end; gap: 2px; height: 20px; }
 .spec i { width: 3px; border-radius: 2px; background: linear-gradient(180deg, var(--accent-2), var(--violet)); }
 .readout { font-family: var(--font-dense); font-size: 12px; color: var(--text); white-space: nowrap; }
 .readout b { color: var(--accent); font-weight: 700; }
@@ -290,7 +303,6 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* full-width orange border-bands frame the FAQ (mirrors the bento's bone/ink bands) */
 .faq {
   width: 100%; margin: 40px 0; padding: 76px 0;
-  border-top: 1px solid color-mix(in srgb, var(--orange) 55%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--orange) 55%, transparent);
 }
 .faq-list { width: min(820px, 92%); margin-left: auto; margin-right: auto; }
@@ -507,3 +519,73 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .btn-violet:hover { background: color-mix(in srgb, var(--violet) 20%, transparent); box-shadow: 0 0 18px rgba(139, 144, 214, 0.3); }
 .tier-fine { color: var(--muted); font-size: 11.5px; margin: 0 0 12px; text-align: center; font-family: var(--mono); line-height: 1.5; }
 @media (max-width: 720px) { .tiers { grid-template-columns: 1fr; } }
+
+/* ---- CTA banner: always the OPPOSITE tone of the page — bone on dark, ink on light —
+   with an orange glow/vignette. Text + logos flip to match (white PNGs use invert()). ---- */
+.cta-banner {
+  width: 100%; margin: 40px 0; padding: 64px 0; text-align: center; overflow: hidden;
+  /* dark page → bone banner */
+  background:
+    radial-gradient(75% 130% at 50% 42%, rgba(217, 74, 63, 0.18), transparent 60%),
+    radial-gradient(135% 135% at 50% 48%, transparent 56%, rgba(80, 55, 30, 0.14)),
+    #e9e2cf;
+  /* recessed depth, like the DAW well: dark edges + top/bottom inner shadow */
+  border-top: 1px solid rgba(6, 8, 14, 0.5);
+  border-bottom: 1px solid rgba(6, 8, 14, 0.5);
+  box-shadow:
+    inset 0 26px 40px -28px rgba(6, 8, 14, 0.72),
+    inset 0 -26px 40px -28px rgba(6, 8, 14, 0.72);
+}
+.cta-banner .cta-inner { width: min(880px, 92%); margin: 0 auto; }
+.cta-banner h2 { color: #23201a; font-size: clamp(24px, 3.8vw, 40px); line-height: 1.06; letter-spacing: -0.02em; }
+.cta-brands { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 26px; padding: 0; margin: 26px 0 0; }
+.cta-brands li { color: #23201a; opacity: 0.7; font-family: var(--font-dense); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; }
+.cta-brands img { height: 22px; width: auto; opacity: 0.72; filter: invert(1); } /* white PNGs → dark on the bone banner */
+.cta-banner-btn { display: inline-block; margin-top: 30px; }
+/* Vision CTA buy button: bone on the dark page, ink on the light page (contrasts the page bg) */
+.vision-btn { display: inline-block; margin-top: 30px; background: #e9e2cf; color: #06080e; border: 1px solid transparent; }
+.vision-btn:hover { background: #f4efe2; box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35); }
+:root[data-theme="light"] .vision-btn { background: #06080e; color: #f3ede0; }
+:root[data-theme="light"] .vision-btn:hover { background: #10141d; box-shadow: 0 8px 26px rgba(217, 74, 63, 0.25); }
+.cta-disclaimer { color: rgba(35, 32, 26, 0.5); font-size: 10.5px; line-height: 1.55; max-width: 68ch; margin: 28px auto 0; }
+
+/* light page → ink banner (white text + logos as-is) */
+:root[data-theme="light"] .cta-banner {
+  background:
+    radial-gradient(78% 135% at 50% 42%, rgba(217, 74, 63, 0.30), transparent 62%),
+    radial-gradient(130% 130% at 50% 50%, transparent 52%, rgba(0, 0, 0, 0.5)),
+    #06080e;
+  /* a dark inset is invisible on ink — use a warm orange inner glow so it reads as recessed */
+  box-shadow:
+    inset 0 28px 46px -30px rgba(217, 74, 63, 0.6),
+    inset 0 -28px 46px -30px rgba(217, 74, 63, 0.6);
+}
+:root[data-theme="light"] .cta-banner h2 { color: #fff; }
+:root[data-theme="light"] .cta-brands li { color: #fff; }
+:root[data-theme="light"] .cta-brands img { filter: none; }
+:root[data-theme="light"] .cta-disclaimer { color: rgba(255, 255, 255, 0.42); }
+
+/* ---- Legal pages: /terms /privacy /disclaimers ---- */
+.legal { max-width: 740px; margin: 0 auto; padding: 130px 24px 96px; }
+.legal-back { display: inline-block; margin-bottom: 26px; color: var(--muted); font-family: var(--font-dense); font-size: 13px; text-decoration: none; }
+.legal-back:hover { color: var(--accent); }
+.legal h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 8px; color: var(--text); }
+.legal-updated { color: var(--muted); font-family: var(--font-dense); font-size: 13px; margin: 0 0 44px; }
+.legal-body .lede { font-size: 18px; line-height: 1.6; color: var(--text); margin: 0 0 34px; }
+.legal-body h2 { font-family: var(--font-dense); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; margin: 38px 0 10px; color: var(--text); }
+.legal-body p, .legal-body li { line-height: 1.72; margin: 0 0 15px; color: color-mix(in srgb, var(--text) 86%, transparent); }
+.legal-body ul { margin: 0 0 15px; padding-left: 22px; }
+.legal-body li { margin-bottom: 12px; }
+.legal-body strong { color: var(--text); font-weight: 700; }
+.legal-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); }
+.legal-body a:hover { border-bottom-color: var(--accent); }
+/* non-crawlable email: @ and . are CSS-generated so scrapers read no address */
+.email { white-space: nowrap; }
+.email i { font-style: normal; }
+.email .at::before { content: "@"; }
+.email .dot::before { content: "."; }
+.legal-body .tech-cta { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 17px; color: var(--text); }
+
+.foot-legal { display: flex; flex-wrap: wrap; gap: 18px; margin: 4px 0; }
+.foot-legal a { color: var(--muted); font-family: var(--font-dense); font-size: 13px; text-decoration: none; }
+.foot-legal a:hover { color: var(--accent); }
