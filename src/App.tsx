@@ -331,7 +331,7 @@ export default function App() {
             <article className="tier">
               <div className="tier-top">
                 <h3>Free</h3>
-                <div className="price"><span className="amt">$0</span><span className="per">forever</span></div>
+                <div className="price"><span className="amt">$0</span><span className="per">Forever</span></div>
               </div>
               <p className="tier-sub">The whole app, for your first 1,000 samples.</p>
               <ul className="tier-feats">
@@ -342,14 +342,14 @@ export default function App() {
                 <li>macOS &middot; Windows &middot; Linux &middot; offline, no account</li>
               </ul>
               <div className="tier-foot">
-                <a className="btn btn-ghost tier-cta" href="#download">Download Free</a>
+                <a className="btn btn-violet tier-cta" href="#download">Download Free</a>
               </div>
             </article>
             <article className="tier tier-pro">
               <span className="tier-badge">Pro</span>
               <div className="tier-top">
                 <h3>Wave Silo Pro</h3>
-                <div className="price"><span className="amt">$69</span><span className="per">one-time</span></div>
+                <div className="price"><span className="amt">$69</span><span className="per">One-time</span></div>
               </div>
               <p className="tier-sub">Everything in Free, with no limits.</p>
               <ul className="tier-feats">
