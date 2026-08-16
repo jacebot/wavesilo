@@ -436,7 +436,6 @@ export default function App() {
               : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
           </p>
           <p className="sub center">
-            Unsigned for now: on macOS right-click &rarr; <em>Open</em>; on Windows choose <em>More info &rarr; Run anyway</em>.<br />
             Other Linux distros: <a href={`${REL}/Wave.Silo-0.3.13.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
