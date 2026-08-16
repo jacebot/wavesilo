@@ -3,7 +3,8 @@ import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import { LEGAL, type LegalDoc } from './legal'
 import shotDark from './assets/screenshot-dark.webp'
-import shotHero from './assets/shot-hero.webp'
+import heroDark from './assets/hero-dark.webp'
+import heroLight from './assets/hero-light.webp'
 import shotLight from './assets/screenshot.webp'
 import shotTagged from './assets/shot-tagged.webp'
 import shotRecovery from './assets/shot-recovery.webp'
@@ -222,7 +223,8 @@ export default function App() {
           </div>
 
           <div className="shot hero-shot">
-            <img src={shotHero} alt="Wave Silo dark library of samples with waveforms, BPM, key and categories, and a live colored waveform in the player" />
+            <img className="hero-dark" src={heroDark} alt="Wave Silo library of samples with waveforms, BPM, key and categories, and a live colored waveform in the player" />
+            <img className="hero-light" src={heroLight} alt="" aria-hidden="true" />
           </div>
         </section>
 

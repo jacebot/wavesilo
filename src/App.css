@@ -101,12 +101,13 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .nav nav { display: flex; align-items: center; gap: 26px; font-size: 14.5px; color: var(--muted); }
 .nav nav a:hover { color: var(--text); }
 .pill {
-  padding: 9px 18px; border-radius: 12px;
-  background: var(--accent); color: var(--btn-text) !important; font-weight: 700;
-  opacity: 0; transform: translateX(6px); pointer-events: none;
-  transition: opacity 0.28s ease, transform 0.28s ease, background 0.15s;
+  border-radius: 12px; background: var(--accent); color: var(--btn-text) !important; font-weight: 700;
+  white-space: nowrap; overflow: hidden; max-width: 0; padding: 9px 0;
+  opacity: 0; pointer-events: none;
+  transition: max-width 0.34s ease, padding 0.34s ease, opacity 0.3s ease, background 0.15s;
 }
-.nav.scrolled .pill { opacity: 1; transform: none; pointer-events: auto; }
+/* fades + grows in on scroll, shoving the nav links left ("pushes this over") */
+.nav.scrolled .pill { max-width: 200px; padding: 9px 18px; opacity: 1; pointer-events: auto; }
 .pill:hover { background: var(--accent-2); }
 
 /* hamburger (mobile only; shown via the max-width: 860px block) */
@@ -131,7 +132,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 }
 .nav-menu a { padding: 10px 12px; border-radius: 9px; color: var(--text); font-size: 15px; }
 .nav-menu a:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
-.nav-menu .pill { opacity: 1; transform: none; pointer-events: auto; margin-top: 4px; text-align: center; color: var(--btn-text) !important; }
+.nav-menu .pill { max-width: none; padding: 11px 14px; opacity: 1; pointer-events: auto; margin-top: 4px; text-align: center; color: var(--btn-text) !important; }
 .nav-menu .pill:hover { background: var(--accent-2); }
 
 /* ---- hero ---- */
@@ -195,10 +196,15 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .hero-shot {
   margin: 0; justify-self: start;
   width: 132%; max-width: none;
-  -webkit-mask-image: linear-gradient(to right, #000 76%, transparent 100%);
-          mask-image: linear-gradient(to right, #000 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 88%, transparent 100%);
   animation: heroSlide 0.85s 0.12s ease both;
 }
+/* theme-aware hero: matching shot per theme (data-theme is always set by the app) */
+.hero-shot img { display: block; width: 100%; height: auto; }
+.hero-shot .hero-light { display: none; }
+:root[data-theme="light"] .hero-shot .hero-dark { display: none; }
+:root[data-theme="light"] .hero-shot .hero-light { display: block; }
 .shot.wide { max-width: 1000px; }
 
 /* ---- features ---- */
