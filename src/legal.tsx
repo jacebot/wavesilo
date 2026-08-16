@@ -241,9 +241,10 @@ export const LEGAL: Record<string, LegalDoc> = {
           Because Wave Silo is digital software delivered instantly, sales are final as a rule.
           We may grant a refund at our discretion in limited circumstances, for example a
           genuine technical fault we&rsquo;re unable to resolve or an accidental duplicate
-          purchase. Any refund is conditioned on the associated Pro license being deactivated
-          and revoked, after which the paid features stop working. Initiating a chargeback
-          likewise results in the license being revoked.
+          purchase. Any refund is conditioned on the associated Pro license being deactivated;
+          because Pro is verified offline on your machine, access ends once the license can no
+          longer renew rather than the instant a refund is issued. Initiating a chargeback
+          likewise leads to the license being deactivated.
         </p>
 
         <h2>4. Your files</h2>
