@@ -13,7 +13,7 @@ import daw1 from './assets/daw-1.png'
 import daw2 from './assets/daw-2.png'
 import daw3 from './assets/daw-3.png'
 
-const faqs = [
+export const faqs = [
   { q: 'Is it free, or do I pay?', a: 'The full app is free for your first 1,000 samples: no account, no time limit, no nag screens. Pro is a one-time $69 unlock for your whole library and the audition console. Every install also includes a 14-day full-Pro trial.' },
   { q: 'Is Pro a subscription?', a: 'No. Pro is a single $69 purchase. It’s yours forever, with no recurring fees, and it keeps working offline.' },
   { q: 'What do I get with Pro?', a: 'Everything in Free with no limits: your entire library past the 1,000-sample cap, plus the audition console, which repitches and time-stretches any preview to your project’s BPM and key. New Pro features are included as they ship.' },
@@ -261,7 +261,7 @@ export default function App() {
         </section>
 
         <section id="features" className="features">
-          <h2>Dig Deep&hellip;<br />Rediscover all your samples, presets and MIDI files.</h2>
+          <h2>Dig Deep&hellip;<br />Rediscover all your audio samples, presets, and MIDI files.</h2>
           <div className="bento">
             <article className="cell a-drag">
               <div className="head">

@@ -18,11 +18,12 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 const escAttr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
 for (const route of routes) {
-  const { html, title, description } = render(route)
+  const { html, title, description, head } = render(route)
 
   let page = template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
     .replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${escAttr(description)}" />`)
+    .replace('</head>', `    ${head}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
 
   const outPath = route === '/' ? resolve(dist, 'index.html') : resolve(dist, route.slice(1), 'index.html')
@@ -30,6 +31,16 @@ for (const route of routes) {
   writeFileSync(outPath, page)
   console.log(`prerendered ${route} -> ${outPath.replace(dist, 'dist')}`)
 }
+
+// Emit sitemap.xml from the same route list so it can never drift from what we ship.
+const SITE = 'https://wavesilo.com'
+const sitemap =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  routes.map((r) => `  <url><loc>${SITE}${r === '/' ? '/' : r}</loc></url>`).join('\n') +
+  '\n</urlset>\n'
+writeFileSync(resolve(dist, 'sitemap.xml'), sitemap)
+console.log('wrote sitemap.xml')
 
 // The server bundle is a build artifact only; don't ship it.
 rmSync(resolve(dist, 'server'), { recursive: true, force: true })
