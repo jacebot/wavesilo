@@ -13,11 +13,17 @@ import daw2 from './assets/daw-2.png'
 import daw3 from './assets/daw-3.png'
 
 const faqs = [
-  { q: 'Is it actually free?', a: 'Yes. The core app is free: no account, no trial timer, no nag screens. Optional paid power-features may come later, but the library manager stays free.' },
-  { q: 'Do I need an account or internet?', a: 'No. Wave Silo runs fully offline. No login, no telemetry, nothing leaves your machine.' },
-  { q: 'Where does my data live? Will it touch my files?', a: 'Everything is a local SQLite database on your computer. Your audio files are never moved, copied, renamed, or modified. Organizing is non-destructive.' },
-  { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI. MIDI plays through a built-in synth with a piano-roll preview.' },  { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
-  { q: 'Which platforms?', a: 'macOS (Intel + Apple Silicon), Windows, and Linux.' },
+  { q: 'Is it free, or do I pay?', a: 'The full app is free for your first 1,000 samples: no account, no time limit, no nag screens. Pro is a one-time $69 unlock for your whole library and the audition console. Every install also includes a 14-day full-Pro trial.' },
+  { q: 'Is Pro a subscription?', a: 'No. Pro is a single $69 purchase. It’s yours forever, with no recurring fees, and it keeps working offline.' },
+  { q: 'What do I get with Pro?', a: 'Everything in Free with no limits: your entire library past the 1,000-sample cap, plus the audition console, which repitches and time-stretches any preview to your project’s BPM and key. New Pro features are included as they ship.' },
+  { q: 'How does the 14-day trial work?', a: 'Every install includes a 14-day full-Pro trial, with no account or card. When it ends, the app stays yours as the Free tier (up to 1,000 samples); unlock Pro anytime to remove the cap.' },
+  { q: 'Do I need an account or internet?', a: 'No account, and it runs fully offline. The only network activity is an optional check for app updates and, if you buy Pro, a one-time license activation. No telemetry; nothing about your library ever leaves your machine.' },
+  { q: 'Where does my data live? Will it touch my files?', a: 'Everything is a local database on your computer. Your audio files are never moved, copied, renamed, or modified. Organizing is non-destructive.' },
+  { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI. MIDI plays through a built-in synth with a piano-roll preview.' },
+  { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
+  { q: 'Which platforms?', a: 'macOS (Intel and Apple Silicon), Windows, and Linux.' },
+  { q: 'Can I move Pro to another computer?', a: 'Yes. Your Pro license activates on your machine. To move to a new one, deactivate it on the old computer (in the app, or from your order on Lemon Squeezy) and activate on the new one.' },
+  { q: 'How do refunds work?', a: 'Because it’s instant digital software, sales are generally final, but we’ll consider a refund in limited cases; see the Terms of Service. A refund releases and revokes the Pro license.' },
   { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox the app relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
 ]
 
@@ -185,7 +191,7 @@ export default function App() {
           <a href="#features">Features</a>
           <a href="#preview">Screenshots</a>
           <a href="#pricing">Pricing</a>
-          <a href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Feedback</a>
+          <a href="/support">Support</a>
           <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
             <ThemeIcon mode={mode} />
           </button>
@@ -450,9 +456,9 @@ function SiteFooter() {
   return (
     <footer className="foot">
       <div className="brand"><Logo /><span>Wave Silo</span></div>
+      <a className="foot-link" href="/support">Support &rarr;</a>
       <a className="foot-link" href="/tech">How Wave Silo works &rarr;</a>
       <a className="foot-link" href={`${REPO}/releases`}>All releases &amp; versions &rarr;</a>
-      <a className="foot-link" href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Report a bug / feedback &rarr;</a>
       <nav className="foot-legal">
         <a href="/terms">Terms</a>
         <a href="/privacy">Privacy</a>
@@ -486,6 +492,7 @@ function LegalShell({ doc, mode, cycle }: { doc: LegalDoc; mode: Mode; cycle: ()
           <a href="/#features">Features</a>
           <a href="/#pricing">Pricing</a>
           <a href="/tech">Tech</a>
+          <a href="/support">Support</a>
           <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
             <ThemeIcon mode={mode} />
           </button>

@@ -12,7 +12,7 @@ const dist = resolve(root, 'dist')
 const template = readFileSync(resolve(dist, 'index.html'), 'utf-8')
 const { render } = await import(pathToFileURL(resolve(dist, 'server/entry-server.js')).href)
 
-const routes = ['/', '/tech', '/terms', '/privacy', '/disclaimers']
+const routes = ['/', '/tech', '/support', '/terms', '/privacy', '/disclaimers']
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const escAttr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;')

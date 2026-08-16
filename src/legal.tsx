@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 
-const REPO = 'https://github.com/jacebot/wavesilo'
-const ISSUES = `${REPO}/issues/new/choose`
+const LS_ORDERS = 'https://app.lemonsqueezy.com/my-orders'
 const UPDATED = 'August 16, 2026'
 
 export type LegalDoc = {
@@ -32,6 +31,52 @@ export function MailLink({ user = 'support', host = 'wavesilo', tld = 'com' }: {
 // (offline sample processing, but license activation + update checks do touch
 // the network), so the policies are truthful.
 export const LEGAL: Record<string, LegalDoc> = {
+  '/support': {
+    title: 'Support',
+    metaTitle: 'Support | Wave Silo',
+    metaDescription:
+      'Get help with Wave Silo: manage your order, billing, and license through Lemon Squeezy, or email us about the app. Plus links to our Terms, Privacy, and Disclaimers.',
+    body: (
+      <>
+        <p className="lede">
+          Happy to help. Support comes in two halves: your order and license are handled by our
+          payment provider, and anything about the app itself comes straight to us.
+        </p>
+
+        <h2>Orders, billing &amp; your license</h2>
+        <p>
+          Receipts, license keys, moving Pro to a new computer, updating payment details, and
+          refund requests are handled through Lemon Squeezy, our payment provider. Look up your
+          purchase with the email you used at checkout.
+        </p>
+        <p>
+          <a href={LS_ORDERS} target="_blank" rel="noopener">
+            Manage your order &amp; license on Lemon Squeezy &rarr;
+          </a>
+        </p>
+
+        <h2>Help with the app</h2>
+        <p>
+          A question about using Wave Silo, a bug, or a feature request? Email us and a real
+          person (it&rsquo;s a small, independent studio) will get back to you.
+        </p>
+        <p>
+          Reach us at <MailLink />.
+        </p>
+        <p>
+          For a faster answer, include your operating system, the app version (Settings &rarr;
+          About), and what you were doing when it happened.
+        </p>
+
+        <h2>Policies</h2>
+        <p>
+          The fine print lives in our <a href="/terms">Terms of Service</a>,{' '}
+          <a href="/privacy">Privacy Policy</a>, and <a href="/disclaimers">Disclaimers</a>.
+        </p>
+      </>
+    ),
+  },
+
   // SEO / "for the nerds" page. Describes what the app does and why it's fast and
   // private, never HOW the protection works — no licensing scheme, fingerprinting,
   // obfuscation, exact DSP algorithms, or infra. Keep it that way.
@@ -247,9 +292,8 @@ export const LEGAL: Record<string, LegalDoc> = {
 
         <h2>11. Contact</h2>
         <p>
-          Questions, a refund request, or a trademark concern? Email{' '}
-          <MailLink />, or open an issue on the{' '}
-          <a href={ISSUES} target="_blank" rel="noopener">project issue tracker</a> for bugs.
+          Questions, a refund request, or a trademark concern? See our{' '}
+          <a href="/support">Support page</a>, or email <MailLink />.
         </p>
       </>
     ),
@@ -336,9 +380,8 @@ export const LEGAL: Record<string, LegalDoc> = {
         <h2>Changes &amp; contact</h2>
         <p>
           We&rsquo;ll update this policy as the app evolves; the &ldquo;Last updated&rdquo; date
-          above reflects the latest version. Questions about your privacy or data? Email{' '}
-          <MailLink />, or reach us through the{' '}
-          <a href={ISSUES} target="_blank" rel="noopener">project issue tracker</a>.
+          above reflects the latest version. Questions about your privacy or data? See our{' '}
+          <a href="/support">Support page</a>, or email <MailLink />.
         </p>
       </>
     ),
