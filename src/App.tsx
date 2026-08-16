@@ -23,7 +23,7 @@ const faqs = [
   { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI. MIDI plays through a built-in synth with a piano-roll preview.' },
   { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
   { q: 'Which platforms?', a: 'macOS (Intel and Apple Silicon), Windows, and Linux.' },
-  { q: 'Can I move Pro to another computer?', a: 'Yes. Your Pro license activates on your machine. To move to a new one, deactivate it on the old computer (in the app, or from your order on Lemon Squeezy) and activate on the new one.' },
+  { q: 'Can I move Pro to another computer, or if my laptop dies?', a: 'Yes. On the old machine, open Settings and click Deactivate to release your license, then activate on the new one. Deactivating never touches your samples or your trial. If the old machine is lost, dead, or already wiped and you can’t deactivate it there, just email support and we’ll free up your license.' },
   { q: 'How do refunds work?', a: 'Because it’s instant digital software, sales are generally final, but we’ll consider a refund in limited cases; see the Terms of Service. A refund releases and revokes the Pro license.' },
   { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox the app relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
 ]

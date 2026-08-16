@@ -46,14 +46,22 @@ export const LEGAL: Record<string, LegalDoc> = {
 
         <h2>Orders, billing &amp; your license</h2>
         <p>
-          Receipts, license keys, moving Pro to a new computer, updating payment details, and
-          refund requests are handled through Lemon Squeezy, our payment provider. Look up your
-          purchase with the email you used at checkout.
+          Receipts, license keys, updating payment details, and refund requests are handled
+          through Lemon Squeezy, our payment provider. Look up your purchase with the email you
+          used at checkout.
         </p>
         <p>
           <a href={LS_ORDERS} target="_blank" rel="noopener">
             Manage your order &amp; license on Lemon Squeezy &rarr;
           </a>
+        </p>
+
+        <h2>Moving to a new computer</h2>
+        <p>
+          On the old machine, open Settings and click Deactivate to release your license, then
+          activate it on the new one. Deactivating never touches your samples or your trial. If
+          the old machine is lost, dead, or already wiped and you can&rsquo;t deactivate it
+          there, email us below and we&rsquo;ll free up your license for you.
         </p>
 
         <h2>Help with the app</h2>
