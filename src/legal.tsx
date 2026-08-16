@@ -158,6 +158,7 @@ export const LEGAL: Record<string, LegalDoc> = {
           Wave Silo is a free download, with an optional one-time{' '}
           <a href="/#pricing">Pro upgrade</a>. No subscription, no account.
         </p>
+        <p className="tech-credit">Gopher mascot inspired by the Go gopher, designed by Renée French (CC BY 3.0).</p>
       </>
     ),
   },
