@@ -16,9 +16,7 @@ const faqs = [
   { q: 'Is it actually free?', a: 'Yes. The core app is free: no account, no trial timer, no nag screens. Optional paid power-features may come later, but the library manager stays free.' },
   { q: 'Do I need an account or internet?', a: 'No. Wave Silo runs fully offline. No login, no telemetry, nothing leaves your machine.' },
   { q: 'Where does my data live? Will it touch my files?', a: 'Everything is a local SQLite database on your computer. Your audio files are never moved, copied, renamed, or modified. Organizing is non-destructive.' },
-  { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI. MIDI plays through a built-in synth with a piano-roll preview.' },
-  { q: 'My OS says it can’t verify the developer. How do I open it?', a: 'First launch only: on macOS, right-click (or Control-click) the app and choose Open, then confirm. On Windows, click More info → Run anyway. After that it opens normally.' },
-  { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
+  { q: 'What formats are supported?', a: 'WAV, AIFF, MP3, FLAC, and OGG, plus MIDI. MIDI plays through a built-in synth with a piano-roll preview.' },  { q: 'Will it handle my huge collection?', a: 'Yes. It scans and indexes tens of thousands of samples in the background while you keep browsing.' },
   { q: 'Which platforms?', a: 'macOS (Intel + Apple Silicon), Windows, and Linux.' },
   { q: 'Linux in a VM and it won’t launch?', a: 'Virtual machines often lock down the sandbox the app relies on. Start it once with the --no-sandbox flag (e.g. run “wave-silo --no-sandbox”) and it’ll open right up. Desktop Linux doesn’t need this.' },
 ]
