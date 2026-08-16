@@ -57,11 +57,9 @@ export const LEGAL: Record<string, LegalDoc> = {
 
         <h2>Help with the app</h2>
         <p>
-          A question about using Wave Silo, a bug, or a feature request? Email us and a real
-          person (it&rsquo;s a small, independent studio) will get back to you.
-        </p>
-        <p>
-          Reach us at <MailLink />.
+          A question about using Wave Silo, a bug, or a feature request? Email{' '}
+          <MailLink /> and a real person (it&rsquo;s a small, independent studio) will get back
+          to you.
         </p>
         <p>
           For a faster answer, include your operating system, the app version (Settings &rarr;
@@ -292,8 +290,8 @@ export const LEGAL: Record<string, LegalDoc> = {
 
         <h2>11. Contact</h2>
         <p>
-          Questions, a refund request, or a trademark concern? See our{' '}
-          <a href="/support">Support page</a>, or email <MailLink />.
+          Questions, a refund request, or a trademark concern? Email <MailLink /> or see our{' '}
+          <a href="/support">Support page</a>.
         </p>
       </>
     ),
@@ -380,8 +378,8 @@ export const LEGAL: Record<string, LegalDoc> = {
         <h2>Changes &amp; contact</h2>
         <p>
           We&rsquo;ll update this policy as the app evolves; the &ldquo;Last updated&rdquo; date
-          above reflects the latest version. Questions about your privacy or data? See our{' '}
-          <a href="/support">Support page</a>, or email <MailLink />.
+          above reflects the latest version. Questions about your privacy or data? Email{' '}
+          <MailLink /> or see our <a href="/support">Support page</a>.
         </p>
       </>
     ),

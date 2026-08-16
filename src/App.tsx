@@ -103,6 +103,20 @@ const barColor = (t: number) => {
   return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`
 }
 
+type NavLink = { href: string; label: string }
+const NAV_HOME: NavLink[] = [
+  { href: '#features', label: 'Features' },
+  { href: '#preview', label: 'Screenshots' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '/support', label: 'Support' },
+]
+const NAV_PAGE: NavLink[] = [
+  { href: '/#features', label: 'Features' },
+  { href: '/#pricing', label: 'Pricing' },
+  { href: '/tech', label: 'Tech' },
+  { href: '/support', label: 'Support' },
+]
+
 type Mode = 'light' | 'dark' | 'system'
 
 export default function App() {
@@ -187,16 +201,7 @@ export default function App() {
           <Logo />
           <span>Wave Silo</span>
         </a>
-        <nav>
-          <a href="#features">Features</a>
-          <a href="#preview">Screenshots</a>
-          <a href="#pricing">Pricing</a>
-          <a href="/support">Support</a>
-          <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
-            <ThemeIcon mode={mode} />
-          </button>
-          <a className="pill" href={BUY_URL}>Buy Now</a>
-        </nav>
+        <SiteNav links={NAV_HOME} mode={mode} cycle={cycle} />
       </header>
 
       <main id="top">
@@ -452,6 +457,36 @@ export default function App() {
   )
 }
 
+function SiteNav({ links, mode, cycle }: { links: NavLink[]; mode: Mode; cycle: () => void }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <nav>
+      {links.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
+      <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
+        <ThemeIcon mode={mode} />
+      </button>
+      <a className="pill" href={BUY_URL}>Buy Now</a>
+      <button
+        className={`nav-burger${open ? ' open' : ''}`}
+        aria-label={open ? 'Close menu' : 'Open menu'}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span /><span /><span />
+      </button>
+      {open && (
+        <>
+          <div className="nav-scrim" onClick={() => setOpen(false)} />
+          <div className="nav-menu" onClick={() => setOpen(false)}>
+            {links.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
+            <a className="pill" href={BUY_URL}>Buy Now</a>
+          </div>
+        </>
+      )}
+    </nav>
+  )
+}
+
 function SiteFooter() {
   return (
     <footer className="foot">
@@ -488,16 +523,7 @@ function LegalShell({ doc, mode, cycle }: { doc: LegalDoc; mode: Mode; cycle: ()
           <Logo />
           <span>Wave Silo</span>
         </a>
-        <nav>
-          <a href="/#features">Features</a>
-          <a href="/#pricing">Pricing</a>
-          <a href="/tech">Tech</a>
-          <a href="/support">Support</a>
-          <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
-            <ThemeIcon mode={mode} />
-          </button>
-          <a className="pill" href={BUY_URL}>Buy Now</a>
-        </nav>
+        <SiteNav links={NAV_PAGE} mode={mode} cycle={cycle} />
       </header>
       <main className="legal">
         <a className="legal-back" href="/">&larr; Back to wavesilo.com</a>
