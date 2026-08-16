@@ -331,7 +331,7 @@ export default function App() {
             </article>
 
             <article className="cell a-wrangle">
-              <h3>Wrangle a mess in minutes</h3>
+              <h3>Mess, managed.</h3>
               <div className="mark" aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h10" /><circle cx="19" cy="18" r="2" fill="currentColor" stroke="none" /></svg></div>
               <p>Multi-select rows or whole folders. Tag, favorite, and organize at once.</p>
             </article>
