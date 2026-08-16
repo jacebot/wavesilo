@@ -73,6 +73,7 @@ const blocks = [
 
 const REPO = 'https://github.com/jacebot/wavesilo'
 const REL = `${REPO}/releases/download/v0.3.13`
+const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/2311efa0-cb58-4c96-9b97-66b16ab08d8a'
 
 const downloads = [
   { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.3.13-arm64.dmg` },
@@ -160,6 +161,7 @@ export default function App() {
         <nav>
           <a href="#features">Features</a>
           <a href="#preview">Screenshots</a>
+          <a href="#pricing">Pricing</a>
           <a href={`${REPO}/issues/new/choose`} target="_blank" rel="noopener">Feedback</a>
           <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
             <ThemeIcon mode={mode} />
@@ -319,6 +321,49 @@ export default function App() {
               </div>
             </div>
           ))}
+        </section>
+
+        <section id="pricing" className="pricing">
+          <p className="eyebrow center">Pricing</p>
+          <h2>Free to start. <span className="grad">$69 to go unlimited.</span></h2>
+          <p className="lead center">Pay once. No subscription, no account. It works fully offline, and it&rsquo;s yours forever.</p>
+          <div className="tiers">
+            <article className="tier">
+              <div className="tier-top">
+                <h3>Free</h3>
+                <div className="price"><span className="amt">$0</span><span className="per">forever</span></div>
+              </div>
+              <p className="tier-sub">The whole app, for your first 1,000 samples.</p>
+              <ul className="tier-feats">
+                <li>Browse, play, tag &amp; organize your library</li>
+                <li>Real BPM &amp; key detection, waveforms, one-shot/loop</li>
+                <li>Reads Serum &middot; Vital &middot; Massive presets &amp; VCV patches</li>
+                <li>Duplicate finder, watch folders, drag straight into your DAW</li>
+                <li>macOS &middot; Windows &middot; Linux &middot; offline, no account</li>
+              </ul>
+              <div className="tier-foot">
+                <a className="btn btn-ghost tier-cta" href="#download">Download Free</a>
+              </div>
+            </article>
+            <article className="tier tier-pro">
+              <span className="tier-badge">Pro</span>
+              <div className="tier-top">
+                <h3>Wave Silo Pro</h3>
+                <div className="price"><span className="amt">$69</span><span className="per">one-time</span></div>
+              </div>
+              <p className="tier-sub">Everything in Free, with no limits.</p>
+              <ul className="tier-feats">
+                <li className="hl">Your <b>entire</b> library, no 1,000-sample cap</li>
+                <li className="hl">Audition console: repitch &amp; time-stretch any preview to your project&rsquo;s <b>BPM &amp; key</b></li>
+                <li>Every Pro feature we add, included</li>
+                <li>One purchase. Yours forever. No subscription, ever.</li>
+              </ul>
+              <div className="tier-foot">
+                <p className="tier-fine">14-day full trial in every install. Try it all before you pay.</p>
+                <a className="btn btn-primary tier-cta" href={BUY_URL}>Get Pro for $69</a>
+              </div>
+            </article>
+          </div>
         </section>
 
         <section id="faq" className="faq">
