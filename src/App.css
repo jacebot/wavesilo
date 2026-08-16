@@ -615,6 +615,11 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .email .at::before { content: "@"; }
 .email .dot::before { content: "."; }
 .legal-body .tech-cta { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 17px; color: var(--text); }
+/* gopher mascot floated mid-page; body copy wraps around it */
+.legal-body .tech-gopher { float: right; width: 272px; max-width: 46%; height: auto; margin: 2px -6px 8px 30px; filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.45)); }
+@media (max-width: 620px) {
+  .legal-body .tech-gopher { float: none; display: block; width: 62%; max-width: 240px; margin: 12px auto 20px; }
+}
 
 .foot-legal { display: flex; flex-wrap: wrap; gap: 18px; margin: 4px 0; }
 .foot-legal a { color: var(--muted); font-family: var(--font-dense); font-size: 13px; text-decoration: none; }

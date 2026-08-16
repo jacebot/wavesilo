@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import gopher from './assets/gopher.webp'
 
 const LS_ORDERS = 'https://app.lemonsqueezy.com/my-orders'
 const UPDATED = 'August 16, 2026'
@@ -108,6 +109,11 @@ export const LEGAL: Record<string, LegalDoc> = {
           computed once.
         </p>
 
+        <img
+          className="tech-gopher"
+          src={gopher}
+          alt="Wave Silo's gopher mascot wearing headphones, coding on a sticker-covered laptop"
+        />
         <h2>Built for huge libraries</h2>
         <p>
           A serious sample library manager has to scale. Wave Silo indexes tens of thousands of
