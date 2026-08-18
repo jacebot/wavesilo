@@ -79,7 +79,7 @@ const blocks = [
 
 const REPO = 'https://github.com/jacebot/wavesilo'
 const REL = `${REPO}/releases/download/v0.3.13`
-const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/2311efa0-cb58-4c96-9b97-66b16ab08d8a'
+const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4bf0-b4fa-bb4bdb2f4674'
 
 const downloads = [
   { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-0.3.13-arm64.dmg` },
