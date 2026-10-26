@@ -83,7 +83,7 @@ const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4b
 
 function trackCheckoutStart() {
   const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
-  gtag?.('event', 'begin_checkout', { currency: 'USD', value: 69 })
+  gtag?.('event', 'begin_checkout')
 }
 
 const downloads = [
