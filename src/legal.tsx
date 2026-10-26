@@ -377,6 +377,12 @@ export const LEGAL: Record<string, LegalDoc> = {
             completed purchase. The app does not send your audio library to these services.
           </li>
           <li>
+            The website also uses the Meta Pixel to measure visits from our Facebook ads and
+            when someone opens checkout. Meta may use cookies and similar technologies for
+            advertising measurement. Opening checkout is not a completed purchase, and we do
+            not send your audio files or library information to Meta.
+          </li>
+          <li>
             Downloads are served from GitHub Releases; following a download link involves
             GitHub as described above.
           </li>
