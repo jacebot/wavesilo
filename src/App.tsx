@@ -81,6 +81,11 @@ const REPO = 'https://github.com/jacebot/wavesilo'
 const REL = `${REPO}/releases/download/v1.2.0`
 const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4bf0-b4fa-bb4bdb2f4674'
 
+function trackCheckoutStart() {
+  const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+  gtag?.('event', 'begin_checkout', { currency: 'USD', value: 69 })
+}
+
 const downloads = [
   { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-1.2.0-arm64.dmg` },
   { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-1.2.0.dmg` },
@@ -257,7 +262,7 @@ export default function App() {
             <li>BPM &amp; key at a glance</li>
             <li>Drag-and-drop to your DAW</li>
           </ul>
-          <a className="btn vision-btn" href={BUY_URL}>Buy Now</a>
+          <a className="btn vision-btn" href={BUY_URL} onClick={trackCheckoutStart}>Buy Now</a>
         </section>
 
         <section id="features" className="features">
@@ -396,7 +401,7 @@ export default function App() {
               </ul>
               <div className="tier-foot">
                 <p className="tier-fine">14-day full trial in every install. Try it all before you pay.</p>
-                <a className="btn btn-primary tier-cta" href={BUY_URL}>Get Pro for $69</a>
+                <a className="btn btn-primary tier-cta" href={BUY_URL} onClick={trackCheckoutStart}>Get Pro for $69</a>
               </div>
             </article>
           </div>
@@ -467,7 +472,7 @@ function SiteNav({ links, mode, cycle }: { links: NavLink[]; mode: Mode; cycle: 
       <button className="theme-btn" onClick={cycle} title={`Theme: ${mode}`} aria-label={`Theme: ${mode}`}>
         <ThemeIcon mode={mode} />
       </button>
-      <a className="pill" href={BUY_URL}>Buy Now</a>
+      <a className="pill" href={BUY_URL} onClick={trackCheckoutStart}>Buy Now</a>
       <button
         className={`nav-burger${open ? ' open' : ''}`}
         aria-label={open ? 'Close menu' : 'Open menu'}
@@ -481,7 +486,7 @@ function SiteNav({ links, mode, cycle }: { links: NavLink[]; mode: Mode; cycle: 
           <div className="nav-scrim" onClick={() => setOpen(false)} />
           <div className="nav-menu" onClick={() => setOpen(false)}>
             {links.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
-            <a className="pill" href={BUY_URL}>Buy Now</a>
+            <a className="pill" href={BUY_URL} onClick={trackCheckoutStart}>Buy Now</a>
           </div>
         </>
       )}

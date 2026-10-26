@@ -315,7 +315,7 @@ export const LEGAL: Record<string, LegalDoc> = {
 
   '/privacy': {
     title: 'Privacy Policy',
-    updated: UPDATED,
+    updated: 'October 26, 2026',
     body: (
       <>
         <p className="lede">
@@ -370,9 +370,11 @@ export const LEGAL: Record<string, LegalDoc> = {
         <h2>This website</h2>
         <ul>
           <li>
-            The site uses privacy-friendly, cookieless analytics (Vercel Analytics) to count
-            page views and understand traffic in aggregate. It doesn&rsquo;t set advertising
-            cookies or build a profile of you.
+            The site uses Vercel Analytics and Google Analytics to understand visits and how
+            people use the website. Google Analytics may collect information about pages viewed,
+            links clicked, approximate location, browser and device, and referral source. We
+            record when someone opens the Lemon Squeezy checkout, but that event is not a
+            completed purchase. The app does not send your audio library to these services.
           </li>
           <li>
             Downloads are served from GitHub Releases; following a download link involves
