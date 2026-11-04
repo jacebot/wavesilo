@@ -78,7 +78,7 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v1.2.0`
+const REL = `${REPO}/releases/download/v1.3.1`
 const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4bf0-b4fa-bb4bdb2f4674'
 
 function trackCheckoutStart() {
@@ -89,12 +89,12 @@ function trackCheckoutStart() {
 }
 
 const downloads = [
-  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-1.2.0-arm64.dmg` },
-  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-1.2.0.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.2.0.exe` },
-  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.2.0.deb` },
+  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-1.3.1-arm64.dmg` },
+  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-1.3.1.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.3.1.exe` },
+  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.3.1.deb` },
 ]
-const ARM_DEB = `${REL}/Wave.Silo-1.2.0-arm64.deb`
+const ARM_DEB = `${REL}/Wave.Silo-1.3.1-arm64.deb`
 const VERSION = (REL.match(/v(\d+\.\d+\.\d+)/) ?? [])[1] ?? ''
 
 // A real-looking audio waveform for the audio-engine bento cell: bars with
@@ -110,6 +110,20 @@ const barColor = (t: number) => {
   const b = [194, 79, 240]
   return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`
 }
+
+// Mini waveforms for the AI "sounds like" banner: a short, deterministic bar pattern per
+// result row, so the cell shows a ranked list of timbre matches with cosine-style scores.
+const aiBars = (seed: number) => Array.from({ length: 22 }, (_, i) => {
+  const t = i / 21
+  const env = 0.4 + 0.6 * Math.pow(Math.sin(t * Math.PI), 0.5)
+  const osc = Math.abs(0.6 * Math.sin(i * (1.3 + seed * 0.4) + seed) + 0.4 * Math.sin(i * 0.5 + seed))
+  return Math.round((0.18 + 0.82 * env * osc) * 100)
+})
+const AI_MATCHES = [
+  { name: 'Reese_Bass_03', score: '0.98', bars: aiBars(1) },
+  { name: 'SubGrowl_A', score: '0.94', bars: aiBars(2) },
+  { name: 'DarkPluck_7', score: '0.91', bars: aiBars(3) },
+]
 
 type NavLink = { href: string; label: string }
 const NAV_HOME: NavLink[] = [
@@ -270,6 +284,23 @@ export default function App() {
         <section id="features" className="features">
           <h2>Dig Deep&hellip;<br />Rediscover all your audio samples, presets, and MIDI files.</h2>
           <div className="bento">
+            <article className="cell a-ai">
+              <div className="head">
+                <span className="ey">New · Pro</span>
+                <h3>Find more like this one</h3>
+                <p>Not just filename or metadata matching. Right-click any sample in Wave Silo, find similar sounds. Wave Silo ranks your whole library by how it actually sounds using AI models that run on your hardware. No data is sent to any provider or cloud service ever.</p>
+                <p className="ai-note">The matching uses a small open audio model that runs on your machine. Your samples are never uploaded, and never used to train anything.</p>
+              </div>
+              <div className="ai-viz" aria-hidden>
+                {AI_MATCHES.map((m) => (
+                  <div className="ai-match" key={m.name}>
+                    <span className="ai-name">{m.name}</span>
+                    <span className="wf">{m.bars.map((h, i) => <span key={i} style={{ height: `${h}%`, background: barColor(i / (m.bars.length - 1)) }} />)}</span>
+                    <span className="ai-score"><b>{m.score}</b></span>
+                  </div>
+                ))}
+              </div>
+            </article>
             <article className="cell a-drag">
               <div className="head">
                 <span className="ey">The point of the whole thing</span>
@@ -454,7 +485,7 @@ export default function App() {
               : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
           </p>
           <p className="sub center">
-            Other Linux distros: <a href={`${REL}/Wave.Silo-1.2.0.tar.gz`}>.tar.gz</a>.
+            Other Linux distros: <a href={`${REL}/Wave.Silo-1.3.1.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>
