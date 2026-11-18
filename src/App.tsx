@@ -78,7 +78,7 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v1.3.1`
+const REL = `${REPO}/releases/download/v1.3.2`
 const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4bf0-b4fa-bb4bdb2f4674'
 
 function trackCheckoutStart() {
@@ -89,12 +89,11 @@ function trackCheckoutStart() {
 }
 
 const downloads = [
-  { key: 'mac-arm', os: 'macOS', note: 'Apple Silicon', href: `${REL}/Wave.Silo-1.3.1-arm64.dmg` },
-  { key: 'mac-intel', os: 'macOS', note: 'Intel', href: `${REL}/Wave.Silo-1.3.1.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.3.1.exe` },
-  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.3.1.deb` },
+  { key: 'mac', os: 'macOS', note: 'Universal · Apple Silicon + Intel', href: `${REL}/Wave.Silo-1.3.2-universal.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.3.2.exe` },
+  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.3.2.deb` },
 ]
-const ARM_DEB = `${REL}/Wave.Silo-1.3.1-arm64.deb`
+const ARM_DEB = `${REL}/Wave.Silo-1.3.2-arm64.deb`
 const VERSION = (REL.match(/v(\d+\.\d+\.\d+)/) ?? [])[1] ?? ''
 
 // A real-looking audio waveform for the audio-engine bento cell: bars with
@@ -160,10 +159,8 @@ export default function App() {
 
   const cycle = () => setMode(mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system')
 
-  // Highlight the visitor's download. OS comes from the UA. Mac CPU arch only
-  // comes from Chromium's userAgentData — Safari hides it (and masks the WebGL
-  // renderer to "Apple GPU" even on Intel), so on Safari we highlight BOTH Mac
-  // builds ('mac') rather than confidently recommending the wrong one.
+  // Highlight the visitor's download from the UA. The macOS build is a single
+  // universal binary (Apple Silicon + Intel), so no CPU-arch sniffing is needed.
   const [rec, setRec] = useState('')
   useEffect(() => {
     const ua = navigator.userAgent
@@ -181,13 +178,7 @@ export default function App() {
         .catch(() => {})
       return
     }
-    if (/Mac/i.test(ua)) {
-      setRec('mac')
-      const uad = (navigator as unknown as { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData
-      uad?.getHighEntropyValues?.(['architecture'])
-        .then((v) => setRec(v?.architecture === 'x86' ? 'mac-intel' : 'mac-arm'))
-        .catch(() => {})
-    }
+    if (/Mac/i.test(ua)) setRec('mac')
   }, [])
 
   // Nav is transparent over the hero (its Download would double the hero CTA);
@@ -485,7 +476,7 @@ export default function App() {
               : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
           </p>
           <p className="sub center">
-            Other Linux distros: <a href={`${REL}/Wave.Silo-1.3.1.tar.gz`}>.tar.gz</a>.
+            Other Linux distros: <a href={`${REL}/Wave.Silo-1.3.2.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>
