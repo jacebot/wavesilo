@@ -78,7 +78,7 @@ const blocks = [
 ]
 
 const REPO = 'https://github.com/jacebot/wavesilo'
-const REL = `${REPO}/releases/download/v1.3.3`
+const REL = `${REPO}/releases/download/v1.3.4`
 const BUY_URL = 'https://wavesilo.lemonsqueezy.com/checkout/buy/9435154d-e7a9-4bf0-b4fa-bb4bdb2f4674'
 
 function trackCheckoutStart() {
@@ -89,11 +89,11 @@ function trackCheckoutStart() {
 }
 
 const downloads = [
-  { key: 'mac', os: 'macOS', note: 'Universal · Apple Silicon + Intel', href: `${REL}/Wave.Silo-1.3.3-universal.dmg` },
-  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.3.3.exe` },
-  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.3.3.deb` },
+  { key: 'mac', os: 'macOS', note: 'Universal · Apple Silicon + Intel', href: `${REL}/Wave.Silo-1.3.4-universal.dmg` },
+  { key: 'win', os: 'Windows', note: '.exe installer', href: `${REL}/Wave.Silo.Setup.1.3.4.exe` },
+  { key: 'linux', os: 'Linux', note: '.deb · Debian/Ubuntu', href: `${REL}/Wave.Silo-1.3.4.deb` },
 ]
-const ARM_DEB = `${REL}/Wave.Silo-1.3.3-arm64.deb`
+const ARM_DEB = `${REL}/Wave.Silo-1.3.4-arm64.deb`
 const VERSION = (REL.match(/v(\d+\.\d+\.\d+)/) ?? [])[1] ?? ''
 
 // A real-looking audio waveform for the audio-engine bento cell: bars with
@@ -476,7 +476,7 @@ export default function App() {
               : <>Looking for the Arm installer? <a href={ARM_DEB}>Get the arm64 build (Apple Silicon / aarch64) &rarr;</a></>}
           </p>
           <p className="sub center">
-            Other Linux distros: <a href={`${REL}/Wave.Silo-1.3.3.tar.gz`}>.tar.gz</a>.
+            Other Linux distros: <a href={`${REL}/Wave.Silo-1.3.4.tar.gz`}>.tar.gz</a>.
             {' '}<a href={`${REPO}/releases`}>All files &amp; versions &rarr;</a>
           </p>
         </section>
